@@ -39,7 +39,7 @@ export default function MarketPage() {
   
   async function loadTopHolders() {
     try {
-      const res = await fetch(`http://localhost:5000/markets/${marketId}/holders`);
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/holders`);
       const data = await res.json();
       if (data.success) setTopHolders(data.holders);
     } catch (err) {
@@ -52,7 +52,7 @@ export default function MarketPage() {
     try {
 
       const res = await fetch(
-        `http://localhost:5000/markets/${marketId}/my-positions`,
+        `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/my-positions`,
         {
           credentials: "include",
         }
@@ -70,7 +70,7 @@ export default function MarketPage() {
 
   async function loadActivity() {
     try {
-      const res = await fetch(`http://localhost:5000/markets/${marketId}/activity`);
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/activity`);
       const data = await res.json();
       if (data.success) setActivity(data.activity);
     } catch (err) {
@@ -81,7 +81,7 @@ export default function MarketPage() {
   async function likeComment(commentId: number, currentlyLiked: boolean) {
     try {
       const method = currentlyLiked ? "DELETE" : "POST";
-      await fetch(`http://localhost:5000/markets/comments/${commentId}/like`, {
+      await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/comments/${commentId}/like`, {
         method,
         credentials: "include",
       });
@@ -103,7 +103,7 @@ export default function MarketPage() {
 
   async function loadReplies(commentId: number) {
     try {
-      const res = await fetch(`http://localhost:5000/markets/comments/${commentId}/replies`);
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/comments/${commentId}/replies`);
       const data = await res.json();
       if (data.success) {
         setReplies(prev => ({ ...prev, [commentId]: data.replies }));
@@ -116,7 +116,7 @@ export default function MarketPage() {
   async function deleteComment(commentId: number) {
     if (!confirm("Delete this comment?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/markets/comments/${commentId}`, {
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/comments/${commentId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -134,7 +134,7 @@ export default function MarketPage() {
   async function deleteReply(commentId: number, replyId: number) {
     if (!confirm("Delete this reply?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/markets/replies/${replyId}`, {
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/replies/${replyId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -157,7 +157,7 @@ export default function MarketPage() {
       const content = replyTexts[commentId];
       if (!content?.trim()) return;
 
-      const res = await fetch(`http://localhost:5000/markets/comments/${commentId}/replies`, {
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/comments/${commentId}/replies`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -193,7 +193,7 @@ export default function MarketPage() {
 
   async function loadComments() {
     try {
-      const res = await fetch(`http://localhost:5000/markets/${marketId}/comments`);
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/comments`);
       const data = await res.json();
       if (data.success) setComments(data.comments);
     } catch (err) {
@@ -206,7 +206,7 @@ export default function MarketPage() {
       if (!newComment.trim()) return;
       setPostingComment(true);
 
-      const res = await fetch(`http://localhost:5000/markets/${marketId}/comments`, {
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -231,7 +231,7 @@ export default function MarketPage() {
 
   async function loadMarket() {
     try {
-      const res = await fetch(`http://localhost:5000/markets/${marketId}`);
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}`);
       const data = await res.json();
       if (data.success) setMarket(data.market);
     } catch (err) {
@@ -241,7 +241,7 @@ export default function MarketPage() {
 
   async function loadHistory() {
     try {
-      const res = await fetch(`http://localhost:5000/history/${marketId}`);
+      const res = await fetch(`https://prediction-backend-production-05b8.up.railway.app/history/${marketId}`);
       const data = await res.json();
       if (data.success) setHistory(data.history);
     } catch (err) {
@@ -252,7 +252,7 @@ export default function MarketPage() {
   async function buyPosition(outcome: string) {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/trades/buy", {
+      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/trades/buy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -287,7 +287,7 @@ export default function MarketPage() {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/markets/cashout",
+        "https://prediction-backend-production-05b8.up.railway.app/markets/cashout",
         {
           method: "POST",
           headers: {
