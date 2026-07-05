@@ -71,7 +71,7 @@ export default function AdminPage() {
   ) {
     try {
       const res = await fetch(
-        "http://localhost:5000/admin/feature-market",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/feature-market",
         {
           method: "POST",
           headers: {
@@ -149,7 +149,7 @@ export default function AdminPage() {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/admin/shutdown-market",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/shutdown-market",
         {
           method: "POST",
           credentials: "include",
@@ -214,7 +214,7 @@ export default function AdminPage() {
       setCreating(true);
 
       const res = await fetch(
-        "http://localhost:5000/admin/create-market",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/create-market",
         {
           method: "POST",
           headers: {
@@ -276,7 +276,7 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(
-        "http://localhost:5000/admin/delete-market",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/delete-market",
         {
           method: "POST",
           headers: {
@@ -312,7 +312,7 @@ export default function AdminPage() {
     try {
       // CHECK USER
       const meRes = await fetch(
-        "http://localhost:5000/auth/me",
+        "https://prediction-backend-production-05b8.up.railway.app/auth/me",
         { credentials: "include" }
       );
 
@@ -326,7 +326,7 @@ export default function AdminPage() {
 
       //WITHDRAW
       const withdrawalRes = await fetch(
-        "http://localhost:5000/admin/withdrawals",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/withdrawals",
         {
           credentials: "include",
         }
@@ -343,7 +343,7 @@ export default function AdminPage() {
 
       //SUBMISSIONS
       const submissionRes = await fetch(
-        "http://localhost:5000/admin/market-submissions",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/market-submissions",
         {
           credentials: "include",
         }
@@ -359,7 +359,7 @@ export default function AdminPage() {
       }
 
       // LOAD MARKETS
-      const marketRes = await fetch("http://localhost:5000/markets");
+      const marketRes = await fetch("https://prediction-backend-production-05b8.up.railway.app/markets");
       const marketData = await marketRes.json();
       console.log("MARKETS:", marketData);
 
@@ -379,7 +379,7 @@ export default function AdminPage() {
     if (!editingSubmission) return;
 
     const res = await fetch(
-      "http://localhost:5000/admin/update-submission",
+      "https://prediction-backend-production-05b8.up.railway.app/admin/update-submission",
       {
         method: "POST",
         credentials: "include",
@@ -427,7 +427,7 @@ export default function AdminPage() {
   ) {
 
     const res = await fetch(
-      "http://localhost:5000/admin/approve-submission",
+      "https://prediction-backend-production-05b8.up.railway.app/admin/approve-submission",
       {
         method: "POST",
         credentials: "include",
@@ -457,7 +457,7 @@ export default function AdminPage() {
   ) {
 
     const res = await fetch(
-      "http://localhost:5000/admin/reject-submission",
+      "https://prediction-backend-production-05b8.up.railway.app/admin/reject-submission",
       {
         method: "POST",
         credentials: "include",
@@ -487,7 +487,7 @@ export default function AdminPage() {
   ) {
     try {
       const res = await fetch(
-        "http://localhost:5000/admin/approve-withdrawal",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/approve-withdrawal",
         {
           method: "POST",
           headers: {
@@ -524,7 +524,7 @@ export default function AdminPage() {
   ) {
     try {
       const res = await fetch(
-        "http://localhost:5000/admin/reject-withdrawal",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/reject-withdrawal",
         {
           method: "POST",
           headers: {
@@ -595,7 +595,7 @@ export default function AdminPage() {
     try {
 
       const res = await fetch(
-        "http://localhost:5000/admin/update-market",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/update-market",
         {
           method: "POST",
           headers: {
@@ -641,7 +641,7 @@ export default function AdminPage() {
   async function resolveMarket(marketId: number, outcomes: string[]) {
     try {
       const res = await fetch(
-        "http://localhost:5000/admin/resolve",
+        "https://prediction-backend-production-05b8.up.railway.app/admin/resolve",
         {
           method: "POST",
           headers: {
