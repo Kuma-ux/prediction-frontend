@@ -10,7 +10,7 @@ export default function ForgotPasswordPage() {
   async function handleSubmit() {
 
     const res = await fetch(
-      "http://localhost:5000/auth/forgot-password",
+      "https://prediction-backend-production-05b8.up.railway.app/auth/forgot-password",
       {
         method: "POST",
         headers: {
