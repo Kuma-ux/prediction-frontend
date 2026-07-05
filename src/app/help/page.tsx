@@ -20,7 +20,7 @@ export default function HelpPage() {
       setSending(true);
 
       const res = await fetch(
-        "http://localhost:5000/support/contact",
+        "https://prediction-backend-production-05b8.up.railway.app/support/contact",
         {
           method: "POST",
           credentials: "include",
