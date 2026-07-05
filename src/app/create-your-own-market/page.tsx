@@ -65,7 +65,7 @@ export default function CreateYourOwnMarketPage() {
     try {
 
         const res = await fetch(
-            "http://localhost:5000/markets/submit-market",
+            "https://prediction-backend-production-05b8.up.railway.app/markets/submit-market",
             {
                 method: "POST",
                 credentials: "include",
