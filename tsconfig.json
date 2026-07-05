@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "src/app/create-your-own-market/page.js", "src/app/create-your-own-market/page.js"  ],
   "exclude": ["node_modules"]
 }
