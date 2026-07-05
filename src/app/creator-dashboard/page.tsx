@@ -19,7 +19,7 @@ export default function CreatorDashboard() {
   async function loadDashboard() {
 
     const res = await fetch(
-      "http://localhost:5000/creator/dashboard",
+      "https://prediction-backend-production-05b8.up.railway.app/creator/dashboard",
       {
         credentials: "include"
       }
