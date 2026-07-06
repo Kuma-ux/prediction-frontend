@@ -17,7 +17,7 @@ export default function UserPreview({
 
     try {
       const res = await fetch(
-        `http://localhost:5000/users/${username}/preview`
+        `https://prediction-backend-production-05b8.up.railway.app/users/${username}/preview`
       );
 
       const data = await res.json();
