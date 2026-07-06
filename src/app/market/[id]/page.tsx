@@ -371,7 +371,7 @@ export default function MarketPage() {
               {/* Mounted safety guard avoids ResponsiveContainer component crashing */}
               {isMounted && (
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={history}>
+                  <LineChart data={history}
                     margin={
                       isMobile
                         ? {
@@ -386,6 +386,7 @@ export default function MarketPage() {
                           bottom: 20,
                         }
                     }
+                    >
                     <XAxis dataKey="time" stroke="#666" tick={{ fontSize: isMobile ? 10 : 12, }} minTickGap={isMobile ? 40 : 10} tickLine={false} axisLine={false} padding={{ left: 0, right: 0, }} />
                     {!isMobile && (
                     <YAxis domain={[0, 100]} stroke="#666" />
