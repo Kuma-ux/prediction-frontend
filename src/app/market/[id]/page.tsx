@@ -397,7 +397,7 @@ export default function MarketPage() {
                       return (
                         <Line
                           key={option}
-                          type="natural"
+                          type="monotone"
                           dataKey={option}
                           stroke={colors[index % colors.length]}
                           strokeWidth={3}
