@@ -69,7 +69,7 @@ export default function HomePage() {
   async function loadPortfolio() {
     try {
       const res = await fetch(
-        "http://localhost:5000/portfolio",
+        "https://prediction-backend-production-05b8.up.railway.app/portfolio",
         {
           credentials: "include",
         }
@@ -88,7 +88,7 @@ export default function HomePage() {
   async function loadListings() {
     try {
       const res = await fetch(
-        "http://localhost:5000/listings"
+        "https://prediction-backend-production-05b8.up.railway.app/listings"
       );
 
       const data = await res.json();
@@ -105,7 +105,7 @@ export default function HomePage() {
     try{
 
       const res = await fetch(
-        "http://localhost:5000/listings/create",
+        "https://prediction-backend-production-05b8.up.railway.app/listings/create",
         {
           method: "POST",
           headers: {
@@ -146,7 +146,7 @@ export default function HomePage() {
   async function loadChart(marketId: number) {
     try {
       const res = await fetch(
-        `http://localhost:5000/history/${marketId}`
+        `https://prediction-backend-production-05b8.up.railway.app/history/${marketId}`
       );
 
       const data = await res.json();
@@ -205,7 +205,7 @@ export default function HomePage() {
       setTrading(marketId);
 
       const res = await fetch(
-        "http://localhost:5000/trades/buy",
+        "https://prediction-backend-production-05b8.up.railway.app/trades/buy",
         {
           method: "POST",
           headers: {
@@ -252,7 +252,7 @@ export default function HomePage() {
 
   async function loadMarkets() {
     try {
-      const res = await fetch("http://localhost:5000/markets");
+      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/markets");
       const data = await res.json();
       if (data.success) {
         setMarkets(data.markets);
@@ -264,7 +264,7 @@ export default function HomePage() {
 
   async function loadUser() {
     try {
-      const res = await fetch("http://localhost:5000/auth/me", {
+      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/auth/me", {
         credentials: "include",
       });
 
@@ -298,7 +298,7 @@ export default function HomePage() {
       }
 
       const res = await fetch(
-        "http://localhost:5000/listings/buy",
+        "https://prediction-backend-production-05b8.up.railway.app/listings/buy",
         {
           method: "POST",
           headers: {
@@ -350,7 +350,7 @@ export default function HomePage() {
 
       setLoadingDeposit(true);
 
-      const res = await fetch("http://localhost:5000/paystack/initialize", {
+      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/paystack/initialize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -616,7 +616,7 @@ export default function HomePage() {
                   <button
                     onClick={async () => {
                       await fetch(
-                        "http://localhost:5000/auth/logout",
+                        "https://prediction-backend-production-05b8.up.railway.app/auth/logout",
                         {
                           method: "POST",
                           credentials: "include",
