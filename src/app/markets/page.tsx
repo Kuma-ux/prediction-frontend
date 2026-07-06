@@ -13,7 +13,7 @@ export default function MarketsPage() {
   useEffect(() => {
     async function loadMarkets() {
       const res = await fetch(
-        "http://localhost:5000/markets",
+        "https://prediction-backend-production-05b8.up.railway.app/markets",
         {
           credentials: "include",
         }
