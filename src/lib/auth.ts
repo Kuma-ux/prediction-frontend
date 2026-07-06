@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000";
+const API_URL = "https://prediction-backend-production-05b8.up.railway.app";
 
 export async function registerUser(
   email: string,
