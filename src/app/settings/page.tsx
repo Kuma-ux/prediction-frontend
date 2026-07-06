@@ -39,7 +39,7 @@ export default function SettingsPage() {
 
   async function loadUser() {
     const res = await fetch(
-      'http://localhost:5000/users/me',
+      'https://prediction-backend-production-05b8.up.railway.app/users/me',
       {
         credentials: 'include',
       }
@@ -55,13 +55,13 @@ export default function SettingsPage() {
 
       if (data.user.avatar_url) {
         setPreview(
-          `http://localhost:5000${data.user.avatar_url}`
+          `https://prediction-backend-production-05b8.up.railway.app${data.user.avatar_url}`
         );
       }
     }
 
     const walletRes = await fetch(
-      "http://localhost:5000/wallet",
+      "https://prediction-backend-production-05b8.up.railway.app/wallet",
       {
         credentials: "include",
       }
@@ -90,7 +90,7 @@ export default function SettingsPage() {
       setSuccess("");
 
       const res = await fetch(
-        "http://localhost:5000/wallet/request-withdrawal",
+        "https://prediction-backend-production-05b8.up.railway.app/wallet/request-withdrawal",
         {
           method: "POST",
           credentials: "include",
@@ -164,7 +164,7 @@ export default function SettingsPage() {
       }
 
       const res = await fetch(
-        "http://localhost:5000/users/update-profile",
+        "https://prediction-backend-production-05b8.up.railway.app/users/update-profile",
         {
           method: "POST",
           credentials: "include",
