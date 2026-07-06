@@ -14,7 +14,7 @@ export default function TermsPage() {
         "
       >
         <object
-          data="/docs/Terms-of-Use.pdf"
+          data="/docs/Terms-Of-Use.pdf"
           type="application/pdf"
           className="w-full h-full"
         >
