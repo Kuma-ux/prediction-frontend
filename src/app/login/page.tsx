@@ -13,13 +13,32 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   async function handleLogin() {
-    const res = await loginUser(email, password);
+    try {
+      console.log("Attempting login...");
+      
+      const res = await loginUser(email, password);
+
+      console.log("LOGIN RESPONSE:", res);
+
+      const me = await fetch(
+        `https://prediction-backend-production-05b8.up.railway.app/auth/me`,
+        {
+          credentials: "include",
+        }
+      );
+
+      const meData = await me.json();
+
+      console.log("ME RESPONSE:", meData);
 
     if (res.success) {
       alert("Login successful!");
       router.push("/");
     } else {
       alert(res.message || "Login failed");
+    }
+  }   catch (err) {
+      console.error(err);
     }
   }
 
