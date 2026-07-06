@@ -26,7 +26,7 @@ export default function ProfilePage() {
   async function loadProfile() {
     try {
       const res = await fetch(
-        `http://localhost:5000/profile/${username}`
+        `https://prediction-backend-production-05b8.up.railway.app/profile/${username}`
       );
 
       const data = await res.json();
@@ -79,7 +79,7 @@ export default function ProfilePage() {
 
             {profile.user.avatar_url ? (
               <img
-                src={`http://localhost:5000${profile.user.avatar_url}`}
+                src={`https://prediction-backend-production-05b8.up.railway.app${profile.user.avatar_url}`}
                 alt={profile.user.username}
                 className="
                   w-20
