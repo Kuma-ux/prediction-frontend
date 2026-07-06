@@ -5,7 +5,6 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   const isProtectedRoute =
-    req.nextUrl.pathname === "/" ||
     req.nextUrl.pathname.startsWith("/dashboard");
 
   if (isProtectedRoute && !token) {
