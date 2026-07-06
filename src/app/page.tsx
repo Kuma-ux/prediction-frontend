@@ -42,6 +42,7 @@ export default function HomePage() {
   const [openChart, setOpenChart] = useState<number | null>(null);
   const [loadingDeposit, setLoadingDeposit] = useState(false);
   const [trading, setTrading] = useState<number | null>(null);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [portfolioStats, setPortfolioStats] = useState({
     marketsTraded: 0,
@@ -475,6 +476,7 @@ export default function HomePage() {
               <div className="relative group">
 
                 <button
+                  onClick={() => setProfileMenuOpen((prev) => !prev)}
                   className="
                     flex items-center gap-3
                     bg-zinc-900
@@ -494,29 +496,32 @@ export default function HomePage() {
                 </button>
 
                 <div
-                  className="
+                  className={`
                     absolute
                     right-0
                     top-full
+                    mt-2
                     w-64
                     bg-zinc-950
                     border
                     border-white/10
                     rounded-2xl
-                    opacity-0
-                    invisible
-                    group-hover:opacity-100
-                    group-hover:visible
-                    transition
+                    transition-all
                     z-50
                     overflow-hidden
-                  "
+                    ${
+                      profileMenuOpen
+                        ? "opacity-100 visible"
+                        : "opacity-0 invisible group-hover:opacity-100 group-hover:visible"
+                     }
+                  `}
                 >
 
                   <button
-                    onClick={() =>
-                      router.push(`/profile/${user.username}`)
-                    }
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      router.push(`/profile/${user.username}`);
+                    }}
                     className="
                       w-full
                       text-left
@@ -537,7 +542,7 @@ export default function HomePage() {
                   <div className="border-t border-white/10" />
 
                   <button
-                    onClick={() => router.push("/settings")}
+                    onClick={() => { setProfileMenuOpen(false); router.push("/settings");}}
                     className="
                       w-full
                       text-left
@@ -550,7 +555,7 @@ export default function HomePage() {
                   </button>
 
                   <button
-                    onClick={() => router.push("/how-it-works")}
+                    onClick={() => { setProfileMenuOpen(false); router.push("/how-it-works"); }}
                     className="
                       w-full
                       text-left
@@ -562,9 +567,10 @@ export default function HomePage() {
                   </button>
 
                   <button
-                    onClick={() =>
-                      router.push("/create-your-own-market")
-                    }
+                    onClick={() =>{
+                      setProfileMenuOpen(false);
+                      router.push("/create-your-own-market");
+                    }}
                     className="
                       w-full
                       text-left
@@ -576,9 +582,10 @@ export default function HomePage() {
                   </button>
 
                   <button
-                    onClick={() =>
-                      router.push("/creator-dashboard")
-                    }
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      router.push("/creator-dashboard");
+                    }}
                     className="
                       w-full
                       text-left
@@ -590,7 +597,7 @@ export default function HomePage() {
                   </button>
 
                   <button
-                    onClick={() => router.push("/help")}
+                    onClick={() => { setProfileMenuOpen(false); router.push("/help");}}
                     className="
                       w-full
                       text-left
@@ -602,7 +609,7 @@ export default function HomePage() {
                   </button>
 
                   <button
-                    onClick={() => router.push("/terms")}
+                    onClick={() => { setProfileMenuOpen(false); router.push("/terms");}}
                     className="
                       w-full
                       text-left
@@ -622,6 +629,7 @@ export default function HomePage() {
                           credentials: "include",
                         }
                       );
+                      setProfileMenuOpen(false);
 
                       router.push("/login");
                     }}
