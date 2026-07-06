@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:5000/auth/reset-password",
+        "https://prediction-backend-production-05b8.up.railway.app/auth/reset-password",
         {
           method: "POST",
           headers: {
