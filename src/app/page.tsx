@@ -638,24 +638,6 @@ export default function HomePage() {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center gap-3">
-
-                <button
-                  onClick={() => router.push("/login")}
-                  className="
-                    px-5
-                    py-2
-                    rounded-xl
-                    border
-                    border-white/10
-                    bg-zinc-900
-                    hover:bg-zinc-800
-                    transition
-                    font-semibold
-                  "
-                >
-                  Login
-                </button>
 
                 <button
                   onClick={() => router.push("/register")}
@@ -670,9 +652,8 @@ export default function HomePage() {
                     transition
                   "
                 >
-                  Register
+                  Sign In
                 </button>
-              </div>
             )}
           </div>
 
