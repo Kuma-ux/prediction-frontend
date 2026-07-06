@@ -36,6 +36,19 @@ export default function MarketPage() {
   const [activeTab, setActiveTab] = useState<"comments" | "holders" | "activity">("comments");
   const [topHolders, setTopHolders] = useState<any[]>([]);
   const [activity, setActivity] = useState<any[]>([]);
+  const [isMobile, setIsMobile] =useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    check();
+
+    window.addEventListener("resize", check);
+
+    return () => window.removeEventListener("resize", check);
+  }, []);
   
   async function loadTopHolders() {
     try {
@@ -359,15 +372,31 @@ export default function MarketPage() {
               {isMounted && (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={history}>
-                    <XAxis dataKey="time" stroke="#666" />
+                    margin={
+                      isMobile
+                        ? {
+                          top: 5,
+                          right: 0,
+                          left: 0,
+                          bottom: 0,
+                        } : {
+                          top: 20,
+                          right: 20,
+                          left: 20,
+                          bottom: 20,
+                        }
+                    }
+                    <XAxis dataKey="time" stroke="#666" tick={{ fontSize: isMobile ? 10 : 12, }} minTickGap={isMobile ? 40 : 10} tickLine={false} axisLine={false} padding={{ left: 0, right: 0, }} />
+                    {!isMobile && (
                     <YAxis domain={[0, 100]} stroke="#666" />
+                    )}
                     <Tooltip />
                     {market.options?.map((option: string, index: number) => {
                       const colors = ["#00ff99", "#00bbff", "#ffcc00", "#ff4477"];
                       return (
                         <Line
                           key={option}
-                          type="monotone"
+                          type="natural"
                           dataKey={option}
                           stroke={colors[index % colors.length]}
                           strokeWidth={3}
