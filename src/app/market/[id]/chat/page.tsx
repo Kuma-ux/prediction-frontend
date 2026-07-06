@@ -101,7 +101,7 @@ export default function MarketChatPage() {
   async function loadMessages() {
 
     const res = await fetch(
-      `http://localhost:5000/markets/${marketId}/chat`
+      `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/chat`
     );
 
     const data = await res.json();
@@ -142,7 +142,7 @@ export default function MarketChatPage() {
     }
 
     const res = await fetch(
-      `http://localhost:5000/markets/${marketId}/chat`,
+      `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/chat`,
       {
         method: "POST",
         credentials: "include",
@@ -199,7 +199,7 @@ export default function MarketChatPage() {
     
     try {
         await fetch(
-            `http://localhost:5000/markets/chat/${messageId}/react`,
+            `https://prediction-backend-production-05b8.up.railway.app/markets/chat/${messageId}/react`,
             {
                 method:
                   alreadyReacted
@@ -230,7 +230,7 @@ export default function MarketChatPage() {
     );
 
     const res = await fetch(
-      `http://localhost:5000/markets/${marketId}/chat/image`,
+      `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/chat/image`,
       {
         method: "POST",
         credentials: "include",
