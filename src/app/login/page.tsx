@@ -21,7 +21,7 @@ export default function LoginPage() {
       console.log("LOGIN RESPONSE:", res);
 
       const me = await fetch(
-        `https://prediction-backend-production-05b8.up.railway.app/auth/me`,
+        `https://api.theprobability.site/auth/me`,
         {
           credentials: "include",
         }
