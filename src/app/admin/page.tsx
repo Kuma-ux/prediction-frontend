@@ -65,6 +65,74 @@ export default function AdminPage() {
     Record<number, string[]>
   >({});
 
+  const [emailModal, setEmailModal] = useState(false);
+  const [userQuery, setUserQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailBody, setEmailBody] = useState("");
+
+  async function searchUsers(query: string) {
+    setUserQuery(query);
+
+    if (query.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+
+    const res = await fetch(
+      `https://prediction-backend-production-05b8.up.railway.app/admin/search-users?q=${encodeURIComponent(query)}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+      setSearchResults(data.users);
+    }
+  }
+
+  async function sendEmail() {
+    if (!selectedUser) {
+      alert("Choose a user.");
+      return;
+    }
+
+    const res = await fetch(
+      "https://prediction-backend-production-05b8.up.railway.app/admin/send-email",
+      {
+        method: "POST",
+        credentials: "include",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: selectedUser.email,
+          subject: emailSubject,
+          message: emailBody,
+        )},
+      }
+    );
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert(data.error);
+      return;
+    }
+
+    alert("Email sent!");
+
+    setEmailModal(false);
+    setSelectedUser(null);
+    setUserQuery("");
+    setSearchResults([]);
+    setEmailSubject("");
+    setEmailBody("");
+  }
+
   async function toggleFeatured(
     marketId: number,
     featured: boolean
@@ -683,6 +751,21 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-black text-white p-10">
       <h1 className="text-5xl font-black mb-10">Admin Dashboard</h1>
+      <div className="flex gap-4 mb-8">
+        <button
+          onClick={() => setEmailModal(true)}
+          className="
+            bg-blue-600
+            hover:bg-blue-500
+            px-5
+            py-3
+            rounded-xl
+            font-bold
+          "
+        >
+          Send Email
+        </button>
+      </div>
       <div
         className="
           border
@@ -1374,6 +1457,91 @@ export default function AdminPage() {
         </div>
       )}
 
+      {emailModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-6">
+
+          <div className="bg-zinc-950 border border-white/10 rounded-3xl p-6 w-full max-w-2xl">
+
+            <h2 className="text-3xl font-black mb-6">
+              Send Email
+            </h2>
+
+            <input
+              value={userQuery}
+              onChange={(e) => searchUsers(e.target.value)}
+              placeholder="Search username or email..."
+              className="w-full bg-black border border-white/10 p-3 rounded mb-4"
+            />
+
+            {!selectedUser && searchResults.length > 0 && (
+              <div className="border border-white/10 rounded-xl max-h-56 overflow-y-auto mb-4">
+
+                {searchResults.map((u) => (
+                  <button
+                    key={u.id}
+                    onClick={() => {
+                      setSelectedUser(u);
+                      setSearchResults([]);
+                    }}
+                    className="w-full text-left p-3 hover:bg-zinc-800"
+                  >
+                    <div className="font-bold">@{u.username}</div>
+                    <div className="text-sm text-zinc-400">
+                      {u.email}
+                    </div>
+                  </button>
+                ))}
+                
+              </div>
+          )}
+
+          {selectedUser && (
+            <div className="mb-4 p-3 rounded-xl bg-zinc-900">
+              Sending to:
+              <br />
+              <strong>@{selectedUser.username}</strong>
+              <br />
+              {selectedUser.email}
+            </div>
+          )}
+
+          <input
+            value={emailSubject}
+            onChange={(e) => setEmailSubject(e.target.value)}
+            placeholder="Subject"
+            className="w-full bg-black border border-white/10 p-3 rounded mb-3"
+          />
+
+          <textarea
+            value={emailBody}
+            onChange={(e) => setEmailBody(e.target.value)}
+            placeholder="Write your email..."
+            className="w-full h-56 bg-black border border-white/10 p-3 rounded mb-4"
+          />
+
+          <div className="flex gap-3">
+
+            <button
+              onClick={sendEmail}
+              className="flex-1 bg-emerald-500 text-black py-3 rounded-xl font-bold"
+            >
+              Send
+            </button>
+
+            <button
+              onClick={() => setEmailModal(false)}
+              className="flex-1 border border-white/10 rounded-xl"
+            >
+              Cancel
+            </button>
+
+          </div>
+
+        </div>
+
+        </div>
+      )}
+      
       {editingSubmission && (
         <div
           className="
