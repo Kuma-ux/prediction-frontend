@@ -1,4 +1,4 @@
-const API_URL = "https://prediction-backend-production-05b8.up.railway.app";
+const API_URL = "https://api.theprobability.site";
 
 export async function registerUser(
   email: string,
