@@ -13,7 +13,7 @@ export default function MarketsPage() {
   useEffect(() => {
     async function loadMarkets() {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/markets",
+        "https://api.theprobability.site/markets",
         {
           credentials: "include",
         }
