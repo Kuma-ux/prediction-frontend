@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
       setLoading(true);
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/auth/reset-password",
+        "https://api.theprobability.site/auth/reset-password",
         {
           method: "POST",
           headers: {
