@@ -71,6 +71,7 @@ export default function AdminPage() {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [emailSubject, setEmailSubject] = useState("");
   const [emailBody, setEmailBody] = useState("");
+  const [previewEmail, setPreviewEmail] = useState(false);
 
   async function searchUsers(query: string) {
     setUserQuery(query);
@@ -747,6 +748,34 @@ export default function AdminPage() {
         Loading admin...
       </div>
     );
+  }
+
+  function insertHtml(before: string, after = "") {
+    const textarea = document.getElementById(
+      "email-editor"
+    ) as HTMLTextAreaElement;
+
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    const selected = emailBody.substring(start, end);
+
+    const newText =
+      emailBody.substring(0, start) +
+      before +
+      selected +
+      after +
+      emailBody.substring(end);
+
+    setEmailBody(newText);
+
+    setTimeout(() => {
+      textarea.focus();
+      textarea.selectionStart = start + before.length;
+      textarea.selectionEnd = start + before.length + selected.length;
+    }, 0);
   }
 
   return (
@@ -1513,12 +1542,136 @@ export default function AdminPage() {
             className="w-full bg-black border border-white/10 p-3 rounded mb-3"
           />
 
-          <textarea
-            value={emailBody}
-            onChange={(e) => setEmailBody(e.target.value)}
-            placeholder="Write your email..."
-            className="w-full h-56 bg-black border border-white/10 p-3 rounded mb-4"
-          />
+          <div className="mb-4">
+
+            <div className="flex flex-wrap gap-2 mb-3">
+
+              <button
+                onClick={() => insertHtml("<strong>", "</strong>")}
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Bold
+              </button>
+
+              <button
+                onClick={() => insertHtml("<em>", "</em>")}
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Underline
+              </button>
+
+              <button
+                onClick={() => insertHtml("<h1>", "</h1>")}
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                H1
+              </button>
+
+              <button
+                onClick={() => insertHtml("<h2>", "</h2>")}
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                H2
+              </button>
+
+              <button
+                onClick={() => insertHtml("<p>", "</p>")}
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Paragraph
+              </button>
+
+              <button
+                onClick={() =>
+                  insertHtml(
+                    `<a href="">`,
+                    `</a>`
+                    )
+                }
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Link
+              </button>
+
+              <button
+                onClick={() =>
+                  insertHtml(
+                    `<img src="" alt="" style="max-width:100%;" />`
+                    )
+                }
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Image
+              </button>
+
+              <button
+                onClick={() =>
+                  insertHtml(
+                    `<div style="background:#111;padding:20px;border-radius:10px;">`,
+                    `</div>`
+                    )
+                }
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Card
+              </button>
+
+              <button
+                onClick={() =>
+                  insertHtml("<br><br>")
+                }
+                className="px-3 py-1 rounded bg-zinc-800"
+              >
+                Break
+              </button>
+
+              <button
+                onClick={() =>
+                  setPreviewEmail(!previewEmail)
+                }
+                className="ml-auto px-4 py-1 rounded bg-blue-600"
+              >
+                {previewEmail ? "Edit" : "Preview"}
+              </button>
+            </div>
+
+            {previewEmail ? (
+
+              <div
+                className="
+                  border
+                  border-white/10
+                  rounded-xl
+                  p-4
+                  bg-white
+                  text-black
+                  min-h-[350px]
+                "
+                dangerouslySetInnerHTML={{
+                  __html: emailBody
+                }}
+              />
+          ) : (
+
+            <textarea
+              id="email-editor"
+              value={emailBody}
+              onChange={(e) =>
+                setEmailBody(e.target.value)
+              }
+              className="
+                w-full
+                h-72
+                bg-black
+                border
+                border-white/10
+                p-3
+                rounded
+              "
+            />
+
+          )}
+          </div>
 
           <div className="flex gap-3">
 
