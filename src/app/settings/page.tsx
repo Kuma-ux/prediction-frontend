@@ -39,7 +39,7 @@ export default function SettingsPage() {
 
   async function loadUser() {
     const res = await fetch(
-      'https://prediction-backend-production-05b8.up.railway.app/users/me',
+      'https://api.theprobability.site/users/me',
       {
         credentials: 'include',
       }
@@ -55,13 +55,13 @@ export default function SettingsPage() {
 
       if (data.user.avatar_url) {
         setPreview(
-          `https://prediction-backend-production-05b8.up.railway.app${data.user.avatar_url}`
+          `https://api.theprobability.site${data.user.avatar_url}`
         );
       }
     }
 
     const walletRes = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/wallet",
+      "https://api.theprobability.site/wallet",
       {
         credentials: "include",
       }
@@ -90,7 +90,7 @@ export default function SettingsPage() {
       setSuccess("");
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/wallet/request-withdrawal",
+        "https://api.theprobability.site/wallet/request-withdrawal",
         {
           method: "POST",
           credentials: "include",
@@ -164,7 +164,7 @@ export default function SettingsPage() {
       }
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/users/update-profile",
+        "https://api.theprobability.site/users/update-profile",
         {
           method: "POST",
           credentials: "include",
