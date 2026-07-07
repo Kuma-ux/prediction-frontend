@@ -109,6 +109,7 @@ export default function AdminPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: selectedUser.id,
           email: selectedUser.email,
           subject: emailSubject,
           message: emailBody,
