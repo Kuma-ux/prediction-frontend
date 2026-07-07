@@ -82,7 +82,7 @@ export default function AdminPage() {
     }
 
     const res = await fetch(
-      `https://prediction-backend-production-05b8.up.railway.app/admin/search-users?q=${encodeURIComponent(query)}`,
+      `https://api.theprobability.site/admin/search-users?q=${encodeURIComponent(query)}`,
       {
         credentials: "include",
       }
@@ -102,7 +102,7 @@ export default function AdminPage() {
     }
 
     const res = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/admin/send-email",
+      "https://api.theprobability.site/admin/send-email",
       {
         method: "POST",
         credentials: "include",
@@ -142,7 +142,7 @@ export default function AdminPage() {
   ) {
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/feature-market",
+        "https://api.theprobability.site/admin/feature-market",
         {
           method: "POST",
           headers: {
@@ -220,7 +220,7 @@ export default function AdminPage() {
     try {
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/shutdown-market",
+        "https://api.theprobability.site/admin/shutdown-market",
         {
           method: "POST",
           credentials: "include",
@@ -285,7 +285,7 @@ export default function AdminPage() {
       setCreating(true);
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/create-market",
+        "https://api.theprobability.site/admin/create-market",
         {
           method: "POST",
           headers: {
@@ -347,7 +347,7 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/delete-market",
+        "https://api.theprobability.site/admin/delete-market",
         {
           method: "POST",
           headers: {
@@ -383,7 +383,7 @@ export default function AdminPage() {
     try {
       // CHECK USER
       const meRes = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/auth/me",
+        "https://api.theprobability.site/auth/me",
         { credentials: "include" }
       );
 
@@ -397,7 +397,7 @@ export default function AdminPage() {
 
       //WITHDRAW
       const withdrawalRes = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/withdrawals",
+        "https://api.theprobability.site/admin/withdrawals",
         {
           credentials: "include",
         }
@@ -414,7 +414,7 @@ export default function AdminPage() {
 
       //SUBMISSIONS
       const submissionRes = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/market-submissions",
+        "https://api.theprobability.site/admin/market-submissions",
         {
           credentials: "include",
         }
@@ -430,7 +430,7 @@ export default function AdminPage() {
       }
 
       // LOAD MARKETS
-      const marketRes = await fetch("https://prediction-backend-production-05b8.up.railway.app/markets");
+      const marketRes = await fetch("https://api.theprobability.site/markets");
       const marketData = await marketRes.json();
       console.log("MARKETS:", marketData);
 
@@ -450,7 +450,7 @@ export default function AdminPage() {
     if (!editingSubmission) return;
 
     const res = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/admin/update-submission",
+      "https://api.theprobability.site/admin/update-submission",
       {
         method: "POST",
         credentials: "include",
@@ -498,7 +498,7 @@ export default function AdminPage() {
   ) {
 
     const res = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/admin/approve-submission",
+      "https://api.theprobability.site/admin/approve-submission",
       {
         method: "POST",
         credentials: "include",
@@ -528,7 +528,7 @@ export default function AdminPage() {
   ) {
 
     const res = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/admin/reject-submission",
+      "https://api.theprobability.site/admin/reject-submission",
       {
         method: "POST",
         credentials: "include",
@@ -558,7 +558,7 @@ export default function AdminPage() {
   ) {
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/approve-withdrawal",
+        "https://api.theprobability.site/admin/approve-withdrawal",
         {
           method: "POST",
           headers: {
@@ -595,7 +595,7 @@ export default function AdminPage() {
   ) {
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/reject-withdrawal",
+        "https://api.theprobability.site/admin/reject-withdrawal",
         {
           method: "POST",
           headers: {
@@ -666,7 +666,7 @@ export default function AdminPage() {
     try {
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/update-market",
+        "https://api.theprobability.site/admin/update-market",
         {
           method: "POST",
           headers: {
@@ -712,7 +712,7 @@ export default function AdminPage() {
   async function resolveMarket(marketId: number, outcomes: string[]) {
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/admin/resolve",
+        "https://api.theprobability.site/admin/resolve",
         {
           method: "POST",
           headers: {
