@@ -1697,7 +1697,7 @@ export default function HomePage() {
             </a>
 
             <a
-              href="https://t.me/YOUR_CHANNEL"
+              href="https://web.telegram.org/a/#-5520536225"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-sky-400 transition"
@@ -1706,7 +1706,7 @@ export default function HomePage() {
             </a>
 
             <a
-              href="https://youtube.com/@YOUR_CHANNEL"
+              href="https://www.youtube.com/@untitled-p1e"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-red-500 transition"
@@ -1715,7 +1715,7 @@ export default function HomePage() {
             </a>
 
             <a
-              href="https://instagram.com/YOUR_ACCOUNT"
+              href="https://www.instagram.com/ineedanewusername_anyideas"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-pink-500 transition"
