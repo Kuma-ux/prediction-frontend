@@ -65,7 +65,7 @@ export default function CreateYourOwnMarketPage() {
     try {
 
         const res = await fetch(
-            "https://prediction-backend-production-05b8.up.railway.app/markets/submit-market",
+            "https://api.theprobability.site/markets/submit-market",
             {
                 method: "POST",
                 credentials: "include",
