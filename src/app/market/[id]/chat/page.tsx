@@ -101,7 +101,7 @@ export default function MarketChatPage() {
   async function loadMessages() {
 
     const res = await fetch(
-      `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/chat`
+      `https://api.theprobability.site/markets/${marketId}/chat`
     );
 
     const data = await res.json();
@@ -142,7 +142,7 @@ export default function MarketChatPage() {
     }
 
     const res = await fetch(
-      `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/chat`,
+      `https://api.theprobability.site/markets/${marketId}/chat`,
       {
         method: "POST",
         credentials: "include",
@@ -199,7 +199,7 @@ export default function MarketChatPage() {
     
     try {
         await fetch(
-            `https://prediction-backend-production-05b8.up.railway.app/markets/chat/${messageId}/react`,
+            `https://api.theprobability.site/markets/chat/${messageId}/react`,
             {
                 method:
                   alreadyReacted
@@ -230,7 +230,7 @@ export default function MarketChatPage() {
     );
 
     const res = await fetch(
-      `https://prediction-backend-production-05b8.up.railway.app/markets/${marketId}/chat/image`,
+      `https://api.theprobability.site/markets/${marketId}/chat/image`,
       {
         method: "POST",
         credentials: "include",
@@ -410,7 +410,7 @@ export default function MarketChatPage() {
 
                     {msg.image_url && (
                       <img
-                        src={`https://prediction-backend-production-05b8.up.railway.app${msg.image_url}`}
+                        src={`https://api.theprobability.site${msg.image_url}`}
                         alt="chat image"
                         className="
                           mt-3
