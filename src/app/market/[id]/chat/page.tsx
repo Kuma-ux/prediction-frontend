@@ -410,7 +410,7 @@ export default function MarketChatPage() {
 
                     {msg.image_url && (
                       <img
-                        src={`http://localhost:5000${msg.image_url}`}
+                        src={`https://prediction-backend-production-05b8.up.railway.app${msg.image_url}`}
                         alt="chat image"
                         className="
                           mt-3
