@@ -19,7 +19,7 @@ export default function CreatorDashboard() {
   async function loadDashboard() {
 
     const res = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/creator/dashboard",
+      "https://api.theprobability.site/creator/dashboard",
       {
         credentials: "include"
       }
