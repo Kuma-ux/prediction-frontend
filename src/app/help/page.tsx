@@ -20,7 +20,7 @@ export default function HelpPage() {
       setSending(true);
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/support/contact",
+        "https://api.theprobability.site/support/contact",
         {
           method: "POST",
           credentials: "include",
