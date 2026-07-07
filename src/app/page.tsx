@@ -1697,7 +1697,7 @@ export default function HomePage() {
             </a>
 
             <a
-              href="https://web.telegram.org/a/#-5520536225"
+              href="https://t.me/UntitledInc"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-sky-400 transition"
