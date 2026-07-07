@@ -70,7 +70,7 @@ export default function HomePage() {
   async function loadPortfolio() {
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/portfolio",
+        "https://api.theprobability.site/portfolio",
         {
           credentials: "include",
         }
@@ -89,7 +89,7 @@ export default function HomePage() {
   async function loadListings() {
     try {
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/listings"
+        "https://api.theprobability.site/listings"
       );
 
       const data = await res.json();
@@ -106,7 +106,7 @@ export default function HomePage() {
     try{
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/listings/create",
+        "https://api.theprobability.site/listings/create",
         {
           method: "POST",
           headers: {
@@ -147,7 +147,7 @@ export default function HomePage() {
   async function loadChart(marketId: number) {
     try {
       const res = await fetch(
-        `https://prediction-backend-production-05b8.up.railway.app/history/${marketId}`
+        `https://api.theprobability.site/history/${marketId}`
       );
 
       const data = await res.json();
@@ -206,7 +206,7 @@ export default function HomePage() {
       setTrading(marketId);
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/trades/buy",
+        "https://api.theprobability.site/trades/buy",
         {
           method: "POST",
           headers: {
@@ -253,7 +253,7 @@ export default function HomePage() {
 
   async function loadMarkets() {
     try {
-      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/markets");
+      const res = await fetch("https://api.theprobability.site/markets");
       const data = await res.json();
       if (data.success) {
         setMarkets(data.markets);
@@ -265,7 +265,7 @@ export default function HomePage() {
 
   async function loadUser() {
     try {
-      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/auth/me", {
+      const res = await fetch("https://api.theprobability.site/auth/me", {
         credentials: "include",
       });
 
@@ -299,7 +299,7 @@ export default function HomePage() {
       }
 
       const res = await fetch(
-        "https://prediction-backend-production-05b8.up.railway.app/listings/buy",
+        "https://api.theprobability.site/listings/buy",
         {
           method: "POST",
           headers: {
@@ -351,7 +351,7 @@ export default function HomePage() {
 
       setLoadingDeposit(true);
 
-      const res = await fetch("https://prediction-backend-production-05b8.up.railway.app/paystack/initialize", {
+      const res = await fetch("https://api.theprobability.site/paystack/initialize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -623,7 +623,7 @@ export default function HomePage() {
                   <button
                     onClick={async () => {
                       await fetch(
-                        "https://prediction-backend-production-05b8.up.railway.app/auth/logout",
+                        "https://api.theprobability.site/auth/logout",
                         {
                           method: "POST",
                           credentials: "include",
