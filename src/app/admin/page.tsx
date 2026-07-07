@@ -114,6 +114,7 @@ export default function AdminPage() {
           email: selectedUser.email,
           subject: emailSubject,
           message: emailBody,
+          html: emailBody
         }),
       }
     );
