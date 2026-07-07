@@ -26,7 +26,7 @@ export default function ProfilePage() {
   async function loadProfile() {
     try {
       const res = await fetch(
-        `https://prediction-backend-production-05b8.up.railway.app/profile/${username}`
+        `https://api.theprobability.site/profile/${username}`
       );
 
       const data = await res.json();
@@ -79,7 +79,7 @@ export default function ProfilePage() {
 
             {profile.user.avatar_url ? (
               <img
-                src={`https://prediction-backend-production-05b8.up.railway.app${profile.user.avatar_url}`}
+                src={`https://api.theprobability.site${profile.user.avatar_url}`}
                 alt={profile.user.username}
                 className="
                   w-20
