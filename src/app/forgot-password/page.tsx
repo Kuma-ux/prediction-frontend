@@ -10,7 +10,7 @@ export default function ForgotPasswordPage() {
   async function handleSubmit() {
 
     const res = await fetch(
-      "https://prediction-backend-production-05b8.up.railway.app/auth/forgot-password",
+      "https://api.theprobability.site/auth/forgot-password",
       {
         method: "POST",
         headers: {
