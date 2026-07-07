@@ -307,7 +307,7 @@ export default function MarketChatPage() {
   }, [messages]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
+    <main className="h-screen flex flex-col bg-gradient-to-b from-black via-zinc-950 to-black text-white overflow-hidden">
 
       <div
         className="
@@ -315,10 +315,11 @@ export default function MarketChatPage() {
           backdrop-blur-xl
           bg-black/60
           border-b border-white/10
-          px-6 py-5
+          px-4 sm:px-6
+          py-4
         "
       >
-        <h1 className="text-3xl font-black">
+        <h1 className="text-2xl sm:text-3xl font-black">
             Market Chat
         </h1>
 
@@ -327,7 +328,7 @@ export default function MarketChatPage() {
         </p>
       </div>
 
-      <div className="h-[calc(100vh-180px)] overflow-y-auto px-6 py-6 space-y-4">
+      <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 space-y-4">
 
         {messages.map((msg:any) => (
           <div
@@ -342,8 +343,7 @@ export default function MarketChatPage() {
           >
             <div
               className={`
-                w-10
-                h-10
+                w-9 h-9 sm:w-10 sm:h-10
                 rounded-full
                 flex
                 items-center
@@ -360,7 +360,7 @@ export default function MarketChatPage() {
 
             <div className="flex-1">
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
 
                     <span
                       className={`
@@ -386,7 +386,7 @@ export default function MarketChatPage() {
                     rounded-2xl
                     px-4
                     py-3
-                    max-w-[85%]
+                    max-w-[95%] sm:max-w-[85%]
                     break-words
                   "
                 >
@@ -415,7 +415,9 @@ export default function MarketChatPage() {
                         className="
                           mt-3
                           rounded-xl
-                          max-w-sm
+                          w-full
+                          max-w-xs
+                          sm:max-w-sm
                           border
                           border-white/10
                         "
@@ -495,7 +497,7 @@ export default function MarketChatPage() {
 
       </div>
 
-      <div className="sticky bottom-0 bg-black/80 backdrop-blur-xl border-t border-white/10 p-5">
+      <div className="sticky bottom-0 bg-black/80 backdrop-blur-xl border-t border-white/10 p-3 sm:p-5">
         {replyingTo && (
 
         <div
@@ -574,7 +576,7 @@ export default function MarketChatPage() {
             </button>
           </div>
         )}
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
 
         <input
           value={message}
@@ -593,8 +595,10 @@ export default function MarketChatPage() {
             border
             border-white/10
             rounded-2xl
-            px-5
-            py-4
+            px-4
+            py-3
+            text-sm
+            sm:text-base
             outline-none
             focus:border-emerald-500
             transition
@@ -626,7 +630,10 @@ export default function MarketChatPage() {
             fileInputRef.current?.click()
           }
           className={`
+            w-full
+            sm:w-auto
             px-4
+            py-3
             rounded-xl
             text-xl
             transition
@@ -643,7 +650,10 @@ export default function MarketChatPage() {
         <button
           onClick={sendMessage}
           className="
-            px-8
+            w-full
+            sm:w-auto
+            px-3 sm:px-6
+            py-3
             rounded-2xl
             font-black
             bg-gradient-to-r
