@@ -17,7 +17,7 @@ export default function UserPreview({
 
     try {
       const res = await fetch(
-        `https://prediction-backend-production-05b8.up.railway.app/users/${username}/preview`
+        `https://api.theprobability.site/users/${username}/preview`
       );
 
       const data = await res.json();
