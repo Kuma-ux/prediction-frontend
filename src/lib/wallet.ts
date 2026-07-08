@@ -1,4 +1,4 @@
-const API = "https://prediction-backend-production-05b8.up.railway.app";
+const API = "https://api.theprobability.site";
 
 export async function getWallet() {
   const res = await fetch(`${API}/wallet`, {
