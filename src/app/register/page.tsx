@@ -13,16 +13,31 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  function isValidEmail(email: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
   async function handleRegister() {
 
     if (username.length < 3) {
       alert("Username too short");
       return;
     }
+
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (password.length < 8) {
+      alert("Password must be at least 8 characters.");
+      return;
+    }
+    
     const res = await registerUser(
-      email,
+      email.trim().toLowerCase(),
       password,
-      username
+      username.trim()
     );
 
     if (res.success) {
@@ -45,6 +60,8 @@ export default function RegisterPage() {
         />
 
         <input
+          type="email"
+          value={email}
           className="w-full p-3 mb-3 bg-zinc-900 border border-white/10 rounded-lg"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
