@@ -463,7 +463,7 @@ export default function HomePage() {
       const timer = setTimeout(() => {
         setShowMarketHint(false);
         localStorage.setItem("seen-market-hint", "true");
-      }, 7000);
+      }, 20000);
 
       return () => clearTimeout(timer);
     }
