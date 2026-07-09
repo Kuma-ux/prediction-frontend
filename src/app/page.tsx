@@ -452,6 +452,22 @@ export default function HomePage() {
     }
   }, []);
 
+  const [showMarketHint, setShowMarketHint] = useState(false);
+
+  useEffect(() => {
+    const seen = localStorage.getItem("seen-market-hint");
+
+    if (!seen) {
+      setShowMarketHint(true);
+
+      const timer = setTimeout(() => {
+        setShowMarketHint(false);
+        localStorage.setItem("seen-market-hint", "true");
+      }, 7000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
   useEffect(() => {
     if (featuredMarkets.length <= 1) return;
 
@@ -1292,11 +1308,59 @@ export default function HomePage() {
                   )}
                 </div>
 
-                  <h3
-                    onClick={() => router.push(`/market/${market.id}`)}
-                    className="text-[14px] font-semibold leading-4 text-white cursor-pointer hover:text-emerald-400 transition">
-                    {market.title}
-                  </h3>
+                  <div className="relative inline-block">
+
+                    {index === 0 && showMarketHint && (
+                      <div
+                        className="
+                          absolute
+                          top-full
+                          left-0
+                          mt-3
+                          w-72
+                          rounded-xl
+                          bg-zinc-950
+                          border border-emerald-500/30
+                          shadow-xl
+                          shadow-emerald-500/10
+                          px-4
+                          py-3
+                          animate-bounce
+                          z-50
+                        "
+                      >
+                        <p className="text-sm font-medium text-white">
+                          👆 Click the market title to view the full market,
+                          see all outcomes, charts, discussions, and start trading.
+                        </p>
+
+                        <div
+                          className="
+                            absolute
+                            bottom-full
+                            left-6
+                            border-8
+                            border-transparent
+                            border-b-zinc-950
+                          "
+                        />
+                        </div>
+                      )}
+                      <h3
+                        onClick={() => router.push(`/market/${market.id}`)}
+                        className="
+                          text-[14px]
+                          font-semibold
+                          leading-4
+                          text-white
+                          cursor-pointer
+                          hover:text-emerald-400
+                          transition
+                        "
+                      >
+                        {market.title}
+                      </h3>
+                      </div>
                 </div>
 
                 <div className="flex text-[11px] text-zinc-500 items-center gap-1 whitespace-nowrap">
