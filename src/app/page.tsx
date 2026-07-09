@@ -497,7 +497,7 @@ export default function HomePage() {
                   <div
                     className="
                       absolute
-                      bottom-full
+                      top-full
                       right-0
                       mb-3
                       w-64
@@ -509,7 +509,7 @@ export default function HomePage() {
                       px-4
                       py-3
                       animate-bounce
-                      z-50
+                      z-100
                     "
                   >
                     <p className="text-sm text-white font-medium">
@@ -520,7 +520,7 @@ export default function HomePage() {
                     <div
                       className="
                         absolute
-                        top-full
+                        -top-4
                         right-6
                         border-8
                         border-transparent
