@@ -434,6 +434,24 @@ export default function HomePage() {
     });
   }
 
+  const [showProfileHint, setShowProfileHint] = useState(false);
+
+  useEffect(() => {
+    const seen = localStorage.getItem("seen-profile-menu");
+
+    if (!seen) {
+      setShowProfileHint(true);
+
+      const timer = setTimeout(() => {
+        setShowProfileHint(false);
+        localStorage.setItem("seen-profile-menu", "true");
+      }, 7000);
+
+      return () => clearTimeout(timer);
+
+    }
+  }, []);
+
   useEffect(() => {
     if (featuredMarkets.length <= 1) return;
 
@@ -474,6 +492,43 @@ export default function HomePage() {
 
             {user ? (
               <div className="relative group">
+
+                {showProfileHint && (
+                  <div
+                    className="
+                      absolute
+                      bottom-full
+                      right-0
+                      mb-3
+                      w-64
+                      rounded-xl
+                      bg-zinc-950
+                      border border-emerald-500/30
+                      shadow-xl
+                      shadow-emerald-500/10
+                      px-4
+                      py-3
+                      animate-bounce
+                      z-50
+                    "
+                  >
+                    <p className="text-sm text-white font-medium">
+                      👋 Click here to access your profile, settings,
+                      creator dashboard and more.
+                    </p>
+
+                    <div
+                      className="
+                        absolute
+                        top-full
+                        right-6
+                        border-8
+                        border-transparent
+                        border-t-zinc-950
+                      "
+                    />
+                  </div>
+                )}
 
                 <button
                   onClick={() => setProfileMenuOpen((prev) => !prev)}
