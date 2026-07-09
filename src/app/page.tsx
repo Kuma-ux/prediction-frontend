@@ -1332,6 +1332,7 @@ export default function HomePage() {
                         <p className="text-sm font-medium text-white">
                           👆 Click the market title to view the full market,
                           see all outcomes, charts, discussions, and start trading.
+                          Please Apply this logic to an and all existing markets throughout the platform.
                         </p>
 
                         <div
