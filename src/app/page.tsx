@@ -1799,7 +1799,7 @@ export default function HomePage() {
           <div className="flex items-center gap-5 text-2xl">
 
             <a
-              href="https://x.com/YOUR_ACCOUNT"
+              href="https://x.com/mollyja47470434"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 hover:text-white transition"
