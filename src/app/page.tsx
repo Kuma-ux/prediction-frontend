@@ -638,6 +638,21 @@ export default function HomePage() {
                   </button>
 
                   <button
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      router.push("/news");
+                    }}
+                    className="
+                      w-full
+                      text-left
+                      p-4
+                      hover:bg-white/5
+                    "
+                  >
+                    News & Analysis
+                  </button>
+
+                  <button
                     onClick={() =>{
                       setProfileMenuOpen(false);
                       router.push("/create-your-own-market");
