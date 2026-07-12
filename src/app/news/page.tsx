@@ -8,6 +8,37 @@ export default function NewsLanding() {
 
   const [email, setEmail] = useState("");
 
+  const subscribe = async () => {
+
+    if (!email.trim()) return;
+
+    const res = await fetch(
+      "https://api.theprobability.site/newsletter/subscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+
+      router.push("/news/blog");
+
+    } else {
+
+      alert(data.message);
+
+    }
+
+  };
+
   return (
     <main className="min-h-screen bg-black text-white flex items-center justify-center px-6">
 
@@ -54,6 +85,7 @@ export default function NewsLanding() {
         />
 
         <button
+          onClick={subscribe}
           className="
             w-full
             bg-emerald-500
@@ -62,7 +94,6 @@ export default function NewsLanding() {
             font-bold
             rounded-2xl
             py-4
-            transition
           "
         >
           Subscribe & Continue
