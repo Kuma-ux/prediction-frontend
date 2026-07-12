@@ -14,6 +14,28 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
+  // Redirect website news URLs to the news subdomain
+  if (
+    host === "theprobability.site" ||
+    host === "www.theprobability.site"
+  ) {
+    if (pathname === "/news/blog") {
+      return NextResponse.redirect(
+        "https://news.theprobability.site/",
+        308
+      );
+    }
+
+    if (pathname.startsWith("/news/blog/")) {
+      const slug = pathname.replace("/news/blog/", "");
+
+      return NextResponse.redirect(
+        `https://news.theprobability.site/${slug}`,
+        308
+      );
+    }
+  }
+
   // News subdomain
   if (host === "news.theprobability.site") {
 
