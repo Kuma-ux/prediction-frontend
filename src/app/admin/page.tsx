@@ -796,6 +796,20 @@ export default function AdminPage() {
         >
           Send Email
         </button>
+
+        <button
+          onClick={() => router.push("/admin/blog/new")}
+          className="
+            bg-emerald-600
+            hover:bg-emerald-500
+            px-5
+            py-3
+            rounded-xl
+            font-bold
+          "
+        >
+          Publish Blog
+        </button>
       </div>
       <div
         className="
