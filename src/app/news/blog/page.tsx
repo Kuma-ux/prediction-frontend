@@ -16,6 +16,18 @@ interface Blog {
 export default function BlogHome() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = [
+    "All",
+    ...Array.from(
+      new Set(
+        blogs
+        .map(blog => blog.category)
+        .filter(Boolean)
+      )
+    ),
+  ];
 
   useEffect(() => {
     loadBlogs();
@@ -48,9 +60,16 @@ export default function BlogHome() {
     );
   }
 
-  const hero = blogs[0];
-  const featured = blogs.slice(1, 5);
-  const latest = blogs.slice(5);
+  const filteredBlogs =
+    selectedCategory === "All"
+      ? blogs
+      : blogs.filter(
+        blog => blog.category === selectedCategory
+      );
+
+  const hero = filteredBlogs[0];
+  const featured = filteredBlogs.slice(1,5);
+  const latest = filteredBlogs.slice(5);
 
   return (
     <main className="min-h-screen bg-neutral-100">
@@ -209,18 +228,12 @@ export default function BlogHome() {
 
               <div className="space-y-4">
 
-                {[
-                  "Politics",
-                  "Markets",
-                  "Crypto",
-                  "Sports",
-                  "Technology",
-                  "Entertainment",
-                ].map(category => (
+                {categories.map(category => (
 
                   <button
                     key={category}
-                    className="w-full text-left p-3 rounded-xl hover:bg-neutral-100 font-semibold text-black"
+                    onClick={() => setSelectedCategory(category)}
+                    className={` w-full text-left p-3 rounded-xl font-semibold transition ${ selectedCategory === category ? "bg-emerald-500 text-white" : "hover:bg-neutral-100 text-black" }`}
                   >
                     {category}
                   </button>
