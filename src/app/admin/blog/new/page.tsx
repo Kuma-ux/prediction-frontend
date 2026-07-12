@@ -40,6 +40,47 @@ export default function NewBlogPage() {
     }, 0);
   }
 
+  async function publishBlog() {
+    const res = await fetch(
+      "https://api.theprobability.site/admin/blog/create",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type":
+            "application/json"
+        }
+        body: JSON.stringify({
+          title,
+
+          subtitle,
+
+          content,
+
+          category,
+
+          tags: tags
+            .split(",")
+            .map(t => t.trim())
+            .filter(Boolean),
+
+          featured_image: ""
+
+       })
+     }
+   );
+
+   const data = await res.json();
+
+    if (!data.success) {
+      alert(data.error);
+      return;
+    }
+
+    alert("Blog published!");
+
+  }
+
   return (
     <main className="min-h-screen bg-black text-white p-10">
 
@@ -254,6 +295,7 @@ export default function NewBlogPage() {
           </button>
 
           <button
+            onClick={publishBlog}
             className="
               bg-emerald-500
               hover:bg-emerald-400
