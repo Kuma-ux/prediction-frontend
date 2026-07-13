@@ -67,6 +67,81 @@ export default function MarketPage() {
     }
   }
 
+  const fakeUsers = [
+  "CryptoKing",
+  "MarketWhale",
+  "Amina",
+  "JohnK",
+  "PredictPro",
+  "ValueHunter",
+  "NairobiBull",
+  "DataNerd",
+  "SportsEdge",
+  "FinanceGuru",
+  "OddsMaster",
+  "TrendWatcher",
+  "AlphaTrader",
+  "BetSense",
+  ];
+
+  const fakeActions = [
+  "bought",
+  "sold",
+  ];
+
+  const [displayActivity, setDisplayActivity] = useState<any[]>([]);
+
+  useEffect(() => {
+  setDisplayActivity(activity);
+  }, [activity]);
+
+  useEffect(() => {
+  if (!market) return;
+
+  const interval = setInterval(() => {
+
+    const user =
+      fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
+
+    const action =
+      fakeActions[Math.floor(Math.random() * fakeActions.length)];
+
+    const outcome =
+      market.options[
+        Math.floor(Math.random() * market.options.length)
+      ];
+
+    const shares =
+      (Math.random() * 75 + 5).toFixed(2);
+
+    const price =
+      (
+        (market.odds?.[outcome] ?? 0.5) * 100 +
+        (Math.random() * 8 - 4)
+      ).toFixed(0);
+
+    const fakeTrade = {
+      id: Date.now(),
+      username: user,
+      shares,
+      outcome,
+      price,
+      action,
+      fake: true,
+      created_at: new Date().toISOString(),
+    };
+
+    setDisplayActivity(prev => [
+      fakeTrade,
+      ...prev,
+    ].slice(0, 20));
+
+  }, 6000 + Math.random() * 8000);
+
+  return () => clearInterval(interval);
+
+  }, [market]);
+
   async function loadMyPositions() {
 
     try {
@@ -629,10 +704,10 @@ export default function MarketPage() {
 
                   {activeTab === "activity" && (
                     <div className="p-5 space-y-3">
-                      {activity.map((item) => (
+                      {displayActivity.map((item) => (
                         <div key={item.id} className="bg-black border border-white/10 rounded-xl p-4">
                           <div className="text-zinc-300">
-                            <UserPreview username={item.username} /> bought{" "}
+                            <UserPreview username={item.username} /> {item.action}{" "}
                             <span className="font-bold">{item.shares}</span> shares of{" "}
                             <span className="text-emerald-400">{item.outcome}</span> at{" "}
                             <span className="font-bold">{item.price}¢</span>
