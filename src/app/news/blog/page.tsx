@@ -74,13 +74,13 @@ export default function BlogHome() {
   return (
     <main className="min-h-screen bg-neutral-100">
 
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
         <div className="flex justify-between items-end mb-10">
 
           <div>
 
-            <h1 className="text-5xl font-black text-black">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-black">
               Probability News
             </h1>
 
@@ -99,11 +99,11 @@ export default function BlogHome() {
             className="block"
           >
 
-            <div className="grid lg:grid-cols-2 gap-8 mb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-10 lg:mb-16">
 
               <img
                 src={hero.featured_image || "/placeholder.jpg"}
-                className="rounded-3xl h-[500px] object-cover w-full"
+                className="rounded-2xl lg:rounded-3xl h-64 sm:h-80 lg:h-[500px] object-cover w-full"
               />
 
               <div className="flex flex-col justify-center">
@@ -112,11 +112,11 @@ export default function BlogHome() {
                   {hero.category}
                 </div>
 
-                <h2 className="text-6xl font-black leading-tight text-black">
+                <h2 className="text-3xl sm:text-4xl lg:text-6xl font-black leading-tight text-black">
                   {hero.title}
                 </h2>
 
-                <p className="mt-6 text-xl text-neutral-700">
+                <p className="mt-4 lg:mt-6 text-base sm:text-lg lg:text-xl text-neutral-700">
                   {hero.subtitle}
                 </p>
 
@@ -132,7 +132,7 @@ export default function BlogHome() {
 
         )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 lg:mb-16">
 
           {featured.map(blog => (
 
@@ -145,7 +145,7 @@ export default function BlogHome() {
 
                 <img
                   src={blog.featured_image || "/placeholder.jpg"}
-                  className="h-48 w-full object-cover"
+                  className="w-full h-52 sm:h-44 lg:h-48 object-cover"
                 />
 
                 <div className="p-5">
@@ -168,7 +168,7 @@ export default function BlogHome() {
 
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
           <div className="lg:col-span-2">
 
@@ -185,11 +185,11 @@ export default function BlogHome() {
                   href={`/news/blog/${blog.slug}`}
                 >
 
-                  <div className="flex gap-6 bg-white rounded-2xl overflow-hidden hover:shadow-md transition">
+                  <div className="flex flex-col sm:flex-row gap-5 bg-white rounded-2xl overflow-hidden hover:shadow-md transition">
 
                     <img
                       src={blog.featured_image || "/placeholder.jpg"}
-                      className="w-64 h-44 object-cover"
+                      className="w-full sm:w-64 h-56 sm:h-44 object-cover"
                     />
 
                     <div className="p-6 flex flex-col justify-center">
@@ -198,7 +198,7 @@ export default function BlogHome() {
                         {blog.category}
                       </div>
 
-                      <h3 className="text-2xl font-black mt-2 text-black">
+                      <h3 className="text-xl sm:text-2xl font-black mt-2 text-black">
                         {blog.title}
                       </h3>
 
@@ -226,14 +226,14 @@ export default function BlogHome() {
                 Trending Categories
               </h3>
 
-              <div className="space-y-4">
+              <div className="flex flex-wrap gap-3 lg:block lg:space-y-4">
 
                 {categories.map(category => (
 
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={` w-full text-left p-3 rounded-xl font-semibold transition ${ selectedCategory === category ? "bg-emerald-500 text-white" : "hover:bg-neutral-100 text-black" }`}
+                    className={` px-4 py-2 rounded-full lg:rounded-xl font-semibold transition ${ selectedCategory === category ? "bg-emerald-500 text-white" : "bg-neutral-100 hover:bg-neutral-200 text-black" }`}
                   >
                     {category}
                   </button>
