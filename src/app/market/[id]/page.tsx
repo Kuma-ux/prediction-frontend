@@ -354,13 +354,13 @@ export default function MarketPage() {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-5 md:py-10">
         <div className="mb-8">
           <div className="text-emerald-400 text-sm uppercase mb-3">
             {market.category}
           </div>
-          <h1 className="text-5xl font-black mb-4">{market.title}</h1>
-          <p className="text-zinc-400 text-lg max-w-4xl">{market.description}</p>
+          <h1 className="text-3xl md:text-5xl font-black mb-3">{market.title}</h1>
+          <p className="text-base md:text-lg text-zinc-400 max-w-4xl">{market.description}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
