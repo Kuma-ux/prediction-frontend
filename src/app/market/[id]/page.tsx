@@ -54,7 +54,14 @@ export default function MarketPage() {
     try {
       const res = await fetch(`https://api.theprobability.site/markets/${marketId}/holders`);
       const data = await res.json();
-      if (data.success) setTopHolders(data.holders);
+      if (data.success) {
+        setTopHolders(
+          data.holders.filter(
+            (holder: any) =>
+              holder.username.toLowerCase() !== "admin"
+          )
+        );
+      }
     } catch (err) {
       console.error(err);
     }
