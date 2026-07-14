@@ -176,7 +176,7 @@ export default function MarketPage() {
   async function likeComment(commentId: number, currentlyLiked: boolean) {
     try {
       const method = currentlyLiked ? "DELETE" : "POST";
-      await fetch(`https://api.theprobability.site/markets/comments/${commentId}/like`, {
+      const res = await fetch(`https://api.theprobability.site/markets/comments/${commentId}/like`, {
         method,
         credentials: "include",
       });
