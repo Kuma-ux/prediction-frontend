@@ -173,11 +173,10 @@ export default function MarketPage() {
     }
   }
 
-  async function likeComment(commentId: number, currentlyLiked: boolean) {
+  async function likeComment(commentId: number) {
     try {
-      const method = currentlyLiked ? "DELETE" : "POST";
       const res = await fetch(`https://api.theprobability.site/markets/comments/${commentId}/like`, {
-        method,
+        method: "POST",
         credentials: "include",
       });
 
@@ -635,10 +634,10 @@ export default function MarketPage() {
                           <p className="text-zinc-300 whitespace-pre-wrap">{comment.content}</p>
                           <div className="flex items-center gap-5 mt-4">
                             <button
-                              onClick={() => likeComment(comment.id, comment.liked_by_me)}
+                              onClick={() => likeComment(comment.id)}
                               className={`transition ${comment.liked_by_me ? "text-red-500" : "text-zinc-500 hover:text-red-400"}`}
                             >
-                              ❤️ {comment.likes ?? 0}
+                              ❤️ {comment.likes}
                             </button>
                             <button
                               onClick={() => toggleReply(comment.id)}
