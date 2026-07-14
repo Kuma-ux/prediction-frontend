@@ -181,16 +181,11 @@ export default function MarketPage() {
         credentials: "include",
       });
 
-      setComments(prev =>
-        prev.map(comment => {
-          if (comment.id !== commentId) return comment;
-          return {
-            ...comment,
-            liked_by_me: !currentlyLiked,
-            likes: currentlyLiked ? comment.likes - 1 : comment.likes + 1,
-          };
-        })
-      );
+      const data = await res.json();
+
+      if (!data.success) return;
+
+      await loadComments();
     } catch (err) {
       console.error(err);
     }
