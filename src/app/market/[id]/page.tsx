@@ -143,15 +143,14 @@ export default function MarketPage() {
     };
 
   setDisplayActivity(prev => {
-      const oneHourAgo = Date.now() - 60 * 60 * 1000;
+  const oneHourAgo = Date.now() - 60 * 60 * 1000;
 
-      return [
-      fakeTrade,
-      ...prev.filter(
-        trade => new Date(trade.created_at).getTime() >= oneHourAgo
-      ),
-    ];
-
+  return [
+    fakeTrade,
+    ...prev.filter(
+      trade => new Date(trade.created_at).getTime() >= oneHourAgo
+    ),
+  ];
   });
 
   return () => clearInterval(interval);
