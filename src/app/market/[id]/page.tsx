@@ -26,7 +26,7 @@ export default function MarketPage() {
   const [activeTab, setActiveTab] = useState<"comments" | "holders" | "activity">("comments");
   const [topHolders, setTopHolders] = useState<any[]>([]);
   const [activity, setActivity] = useState<any[]>([]);
-  const [isMobile, setIsMobile] =useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const check = () => {
@@ -39,7 +39,7 @@ export default function MarketPage() {
 
     return () => window.removeEventListener("resize", check);
   }, []);
-  
+
   async function loadTopHolders() {
     try {
       const res = await fetch(`https://api.theprobability.site/markets/${marketId}/holders`);
@@ -107,54 +107,54 @@ export default function MarketPage() {
   }, [activity]);
 
   useEffect(() => {
-  if (!market) return;
+    if (!market) return;
 
-  const interval = setInterval(() => {
+    const interval = setInterval(() => {
 
-    const user =
-      fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
+      const user =
+        fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
 
-    const action =
-      fakeActions[Math.floor(Math.random() * fakeActions.length)];
+      const action =
+        fakeActions[Math.floor(Math.random() * fakeActions.length)];
 
-    const outcome =
-      market.options[
-        Math.floor(Math.random() * market.options.length)
-      ];
+      const outcome =
+        market.options[
+          Math.floor(Math.random() * market.options.length)
+        ];
 
-    const shares =
-      (Math.random() * 75 + 5).toFixed(2);
+      const shares =
+        (Math.random() * 75 + 5).toFixed(2);
 
-    const price =
-      (
-        (market.odds?.[outcome] ?? 0.5) * 100 +
-        (Math.random() * 8 - 4)
-      ).toFixed(0);
+      const price =
+        (
+          (market.odds?.[outcome] ?? 0.5) * 100 +
+          (Math.random() * 8 - 4)
+        ).toFixed(0);
 
-    const fakeTrade = {
-      id: Date.now(),
-      username: user,
-      shares,
-      outcome,
-      price,
-      action,
-      fake: true,
-      created_at: new Date().toISOString(),
-    };
+      const fakeTrade = {
+        id: Date.now(),
+        username: user,
+        shares,
+        outcome,
+        price,
+        action,
+        fake: true,
+        created_at: new Date().toISOString(),
+      };
 
-  setDisplayActivity(prev => {
-  const oneHourAgo = Date.now() - 60 * 60 * 1000;
+      setDisplayActivity(prev => {
+        const oneHourAgo = Date.now() - 60 * 60 * 1000;
 
-  return [
-    fakeTrade,
-    ...prev.filter(
-      trade => new Date(trade.created_at).getTime() >= oneHourAgo
-    ),
-  ];
-  });
+        return [
+          fakeTrade,
+          ...prev.filter(
+            trade => new Date(trade.created_at).getTime() >= oneHourAgo
+          ),
+        ];
+      });
+    }, 5000);
 
-  return () => clearInterval(interval);
-
+    return () => clearInterval(interval);
   }, [market]);
 
   async function loadMyPositions() {
