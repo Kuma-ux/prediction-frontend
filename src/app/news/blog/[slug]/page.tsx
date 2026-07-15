@@ -120,29 +120,8 @@ export default function BlogArticle() {
             bg-white
             rounded-2xl
             sm:rounded-3xl
-            p-5
-            sm:p-8
-            lg:p-10
-            shadow-sm
-
-            prose
-            sm:prose-lg
-            lg:prose-xl
-            prose-img:w-full
-            prose-img:h-auto
-            max-w-none
-
-            prose-headings:text-black
-            prose-p:text-neutral-700
-            prose-a:text-emerald-600
-            prose-strong:text-black
-            prose-blockquote:border-emerald-500
-            prose-table:block
-            prose-table:overflow-x-auto
-            prose-pre:overflow-x-auto
-            prose-pre:rounded-xl
-            prose-code:text-emerald-600
-            prose-img:rounded-2xl
+            p-6
+            text-black
           "
           dangerouslySetInnerHTML={{
             __html: blog.content,
