@@ -64,11 +64,11 @@ export default function BlogArticle() {
   return (
     <main className="bg-neutral-100 min-h-screen">
 
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
         <Link
           href="/news/blog"
-          className="text-emerald-600 font-semibold"
+          className="inline-flex items-center text-sm sm:text-base text-emerald-600 font-semibold hover:underline"
         >
           ← Back to News
         </Link>
@@ -79,17 +79,17 @@ export default function BlogArticle() {
             {blog.category}
           </div>
 
-          <h1 className="text-6xl font-black text-black leading-tight mt-4">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-black leading-tight mt-4">
             {blog.title}
           </h1>
 
           {blog.subtitle && (
-            <p className="text-2xl text-neutral-600 mt-6">
+            <p className="text-base sm:text-xl lg:text-2xl text-neutral-600 leading-relaxed mt-5">
               {blog.subtitle}
             </p>
           )}
 
-          <div className="flex items-center gap-3 mt-8 text-neutral-500">
+          <div className="flex flex-wrap items-center gap-2 mt-6 text-sm sm:text-base text-neutral-500">
 
             <span>
               By {blog.author}
@@ -108,20 +108,28 @@ export default function BlogArticle() {
         {blog.featured_image && (
           <img
             src={blog.featured_image}
-            className="w-full rounded-3xl mt-10"
+            alt={blog.title}
+            className="w-full rounded-2xl sm:rounded-3xl object-cover max-h-[520px] mt-8 "
           />
         )}
 
         <article
           className="
-            mt-12
+            mt-8
+            sm:mt-12
             bg-white
-            rounded-3xl
-            p-10
+            rounded-2xl
+            sm:rounded-3xl
+            p-5
+            sm:p-8
+            lg:p-10
             shadow-sm
 
             prose
-            prose-xl
+            sm:prose-lg
+            lg:prose-xl
+            prose-img:w-full
+            prose-img:h-auto
             max-w-none
 
             prose-headings:text-black
@@ -129,6 +137,11 @@ export default function BlogArticle() {
             prose-a:text-emerald-600
             prose-strong:text-black
             prose-blockquote:border-emerald-500
+            prose-table:block
+            prose-table:overflow-x-auto
+            prose-pre:overflow-x-auto
+            prose-pre:rounded-xl
+            prose-code:text-emerald-600
             prose-img:rounded-2xl
           "
           dangerouslySetInnerHTML={{
