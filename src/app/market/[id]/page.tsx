@@ -180,20 +180,25 @@ export default function MarketPage() {
   }
 
   async function loadActivity() {
-    try {
-      const res = await fetch(`https://api.theprobability.site/markets/${marketId}/activity`);
-      const data = await res.json();
-      if (data.success) {
-        const oneHourAgo = Date.now() - 60 * 60 * 1000;
+  try {
+    const res = await fetch(
+      `https://api.theprobability.site/markets/${marketId}/activity`
+    );
 
-        const recentActivity = data.activity.filter((trade: any) => {
-          return new Date(trade.created_at).getTime() >= oneHourAgo;
-        });
+    const data = await res.json();
 
-        setActivity(recentActivity);
-    } catch (err) {
-      console.error(err);
+    if (data.success) {
+      const oneHourAgo = Date.now() - 60 * 60 * 1000;
+
+      const recentActivity = data.activity.filter((trade: any) => {
+        return new Date(trade.created_at).getTime() >= oneHourAgo;
+      });
+
+      setActivity(recentActivity);
     }
+  } catch (err) {
+    console.error(err);
+  }
   }
 
   async function likeComment(commentId: number) {
