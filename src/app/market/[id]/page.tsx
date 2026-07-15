@@ -97,7 +97,13 @@ export default function MarketPage() {
   const [displayActivity, setDisplayActivity] = useState<any[]>([]);
 
   useEffect(() => {
-  setDisplayActivity(activity);
+  const oneHourAgo = Date.now() - 60 * 60 * 1000;
+
+  setDisplayActivity(
+    activity.filter((trade: any) => (
+      new Date(trade.created_at).getTime() >= oneHourAgo
+    ))
+  );
   }, [activity]);
 
   useEffect(() => {
@@ -136,12 +142,17 @@ export default function MarketPage() {
       created_at: new Date().toISOString(),
     };
 
-    setDisplayActivity(prev => [
-      fakeTrade,
-      ...prev,
-    ].slice(0, 20));
+  setDisplayActivity(prev => {
+      const oneHourAgo = Date.now() - 60 * 60 * 1000;
 
-  }, 6000 + Math.random() * 8000);
+      return [
+      fakeTrade,
+      ...prev.filter(
+        trade => new Date(trade.created_at).getTime() >= oneHourAgo
+      ),
+    ];
+
+  });
 
   return () => clearInterval(interval);
 
@@ -172,7 +183,14 @@ export default function MarketPage() {
     try {
       const res = await fetch(`https://api.theprobability.site/markets/${marketId}/activity`);
       const data = await res.json();
-      if (data.success) setActivity(data.activity);
+      if (data.success) {
+        const oneHourAgo = Date.now() - 60 * 60 * 1000;
+
+        const recentActivity = data.activity.filter((trade: any) => {
+          return new Date(trade.created_at).getTime() >= oneHourAgo;
+        });
+
+        setActivity(recentActivity);
     } catch (err) {
       console.error(err);
     }
