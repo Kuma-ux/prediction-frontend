@@ -435,7 +435,13 @@ export default function HomePage() {
   title: string;
   description: string;
   category: string;
+
   featured?: boolean;
+  end_date?: string;
+  totalvolume?: number;
+
+  is_live?: boolean;
+  market_type?: string;
 
   markets: {
     id: number;
@@ -1407,7 +1413,9 @@ export default function HomePage() {
 
                 <div className="flex text-[11px] text-zinc-500 items-center gap-1 whitespace-nowrap">
                   <Clock3 size={11} />
-                  {new Date(item.end_date).toLocaleDateString()}
+                  {item.end_date
+  ? new Date(item.end_date).toLocaleDateString()
+  : "Multiple markets"}
                 </div>
               </div>
 
@@ -1430,7 +1438,9 @@ export default function HomePage() {
                     
                     Resolves:
                     {" "}
-                    {new Date(item.end_date).toLocaleTimeString()}
+                    {item.end_date
+  ? new Date(item.end_date).toLocaleTimeString()
+  : "--"}
                   </div>
                 )}
 
@@ -1656,9 +1666,9 @@ export default function HomePage() {
                       </button>
                     ))}
 
-                    {isEvent
+                    {(isEvent
                       ? item.markets.length > 2
-                      : item.options.length > 2 (
+                      : item.options.length > 2) && (
                         <button
                           onClick={() => router.push(isEvent ? `/event/${item.id}` : `/market/${item.id}`)}
                           className="
@@ -1687,10 +1697,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="text-xs font-bold">
-                      KES
-    {isEvent
-        ? item.totalvolume
-        : item.totalvolume}
+                      KES{item.totalvolume ?? 0}
                     </div>
                   </div>
                 </div>
