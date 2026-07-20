@@ -82,6 +82,13 @@ export default function AdminPage() {
   const [markets, setMarkets] = useState<Market[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [eventId, setEventId] = useState<number | "">("");
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventCategory, setEventCategory] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+  const [eventStartDate, setEventStartDate] = useState("");
+  const [eventEndDate, setEventEndDate] = useState("");
+  const [eventImage, setEventImage] = useState("");
+  const [eventFeatured, setEventFeatured] = useState(false);
   const [marketType, setMarketType] = useState("standard");
   const [selectedOutcomes, setSelectedOutcomes] = useState<
     Record<number, string[]>
@@ -195,6 +202,47 @@ export default function AdminPage() {
     } catch (err) {
       console.error(err);
     }
+  }
+    
+  async function createEvent() {
+    const res = await fetch(
+        "https://api.theprobability.site/admin/create-event",
+        {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title: eventTitle,
+                category: eventCategory,
+                description: eventDescription,
+                start_date: eventStartDate,
+                end_date: eventEndDate,
+                image: eventImage,
+                featured: eventFeatured,
+            }),
+        }
+    );
+
+    const data = await res.json();
+
+    if (!data.success) {
+        alert(data.error);
+        return;
+    }
+
+    alert("Event created");
+
+    setEventTitle("");
+    setEventCategory("");
+    setEventDescription("");
+    setEventStartDate("");
+    setEventEndDate("");
+    setEventImage("");
+    setEventFeatured(false);
+
+    loadAdmin();
   }
 
   function openEditSubmission(submission: any){
@@ -1083,6 +1131,64 @@ export default function AdminPage() {
               </option>
             ))}
           </select>
+
+          <div className="border border-white/10 rounded-2xl bg-zinc-900 p-6 mb-10">
+
+          <h2 className="text-2xl font-bold mb-4">
+          Create Event
+          </h2>
+
+          <input
+          placeholder="Event title"
+          value={eventTitle}
+          onChange={(e)=>setEventTitle(e.target.value)}
+          />
+
+          <input
+          placeholder="Category"
+          value={eventCategory}
+          onChange={(e)=>setEventCategory(e.target.value)}
+          />
+
+          <textarea
+          placeholder="Description"
+          value={eventDescription}
+          onChange={(e)=>setEventDescription(e.target.value)}
+          />
+
+          <input
+          type="datetime-local"
+          value={eventStartDate}
+          onChange={(e)=>setEventStartDate(e.target.value)}
+          />
+
+          <input
+          type="datetime-local"
+          value={eventEndDate}
+          onChange={(e)=>setEventEndDate(e.target.value)}
+          />
+
+          <input
+          placeholder="Image URL"
+          value={eventImage}
+          onChange={(e)=>setEventImage(e.target.value)}
+          />
+
+
+          <label>
+          <input
+              type="checkbox"
+              checked={eventFeatured}
+              onChange={(e)=>setEventFeatured(e.target.checked)}
+          />
+
+          Featured
+          </label>
+
+          <button onClick={createEvent}>
+          Create Event
+          </button>
+          </div>
 
           <input
             value={title}
