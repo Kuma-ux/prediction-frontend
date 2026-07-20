@@ -1269,7 +1269,7 @@ export default function HomePage() {
                 flex
                 flex-col
                 ${
-                  market.is_live
+                  item.is_live
                     ?`
                     bg-gradient-to-br
                     from-red-950/40
@@ -1295,7 +1295,7 @@ export default function HomePage() {
                 }`}
             >
               <div className="p-4 flex-1 flex flex-col relative">
-                {market.is_live && (
+                {item.is_live && (
                   <motion.div
                     animate={{
                       x: ["-100%", "100%"],
@@ -1407,7 +1407,7 @@ export default function HomePage() {
 
                 <div className="flex text-[11px] text-zinc-500 items-center gap-1 whitespace-nowrap">
                   <Clock3 size={11} />
-                  {new Date(market.end_date).toLocaleDateString()}
+                  {new Date(item.end_date).toLocaleDateString()}
                 </div>
               </div>
 
@@ -1415,7 +1415,7 @@ export default function HomePage() {
                   {item.description}
                 </p>
 
-                {market.is_live && (
+                {item.is_live && (
                   <div className="
                     flex
                     items-center
@@ -1430,7 +1430,7 @@ export default function HomePage() {
                     
                     Resolves:
                     {" "}
-                    {new Date(market.end_date).toLocaleTimeString()}
+                    {new Date(item.end_date).toLocaleTimeString()}
                   </div>
                 )}
 
@@ -1612,8 +1612,8 @@ export default function HomePage() {
                     : visibleOptions.map((option) => (
                       <button
                         key={option}
-                        onClick={() => buyPosition(market.id, option)}
-                        disabled={trading === market.id}
+                        onClick={() => buyPosition(item.id, option)}
+                        disabled={trading === item.id}
                         className="
                           h-9
                           min-w-0
@@ -1650,7 +1650,7 @@ export default function HomePage() {
                               shrink-0
                             "
                           >
-                            {((market.odds?.[option] ?? 0) * 100).toFixed(0)}¢
+                            {((item.odds?.[option] ?? 0) * 100).toFixed(0)}¢
                           </span>
                         </div>
                       </button>
