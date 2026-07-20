@@ -1589,6 +1589,15 @@ export default function HomePage() {
                     <>
                     {isEvent
                       ? item.markets.slice(0, 2).map((market: Event["markets"][number]) => (
+
+                        const odds = market.odds as Record<string, number> | undefined;
+
+                        const leadingOutcome = odds
+                          ? Object.entries(odds).reduce((best, current) =>
+                              current[1] > best[1] ? current : best
+                            )
+                          : null;
+                        
                       <button
                         key={market.id}
                         onClick={() => router.push(`/market/${market.id}`)}
@@ -1611,9 +1620,9 @@ export default function HomePage() {
                             {market.title}
                           </span>
                           <span className="font-bold text-emerald-400">
-                            {market.odds != null
-                                ? `${Math.round(market.odds * 100)}¢`
-                                : "--"}
+                            {leadingOutcome
+    ? `${leadingOutcome[0]} ${Math.round(leadingOutcome[1] * 100)}¢`
+    : "--"}
                           </span>
                         </div>
                       </button>
