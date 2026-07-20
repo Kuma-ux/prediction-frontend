@@ -1278,7 +1278,7 @@ export default function HomePage() {
                     border-red-500/40
                     hover:border-red-400
                     shadow-[0_0_35px_rgba(255,0,80,0.15)]`
-                    : market.market_type === "bundle" ?
+                    : item.market_type === "bundle" ?
                     `
                     bg-gradient-to-br
                     from-purple-950/40
@@ -1435,9 +1435,9 @@ export default function HomePage() {
                 )}
 
                 {/* BUNDLE PREDICTIONS */}
-                {market.market_type === "bundle" &&
-                  market.bundle_predictions &&
-                  market.bundle_predictions.length > 0 && (
+                {item.market_type === "bundle" &&
+                  item.bundle_predictions &&
+                  item.bundle_predictions.length > 0 && (
 
                     <div className="mb-2">
 
@@ -1447,7 +1447,7 @@ export default function HomePage() {
 
                       <div className="space-y-1 max-h-16 overflow-y-auto pr-1">
 
-                        {market.bundle_predictions.map(
+                        {item.bundle_predictions.map(
                           (prediction, i) => (
 
                             <div
@@ -1487,7 +1487,7 @@ export default function HomePage() {
                 />
 
                 <div className="grid grid-cols-2 gap-3 ">
-                  {market.market_type === "bundle" ? (
+                  {item.market_type === "bundle" ? (
                     <>
                       <button
                         onClick={() =>
