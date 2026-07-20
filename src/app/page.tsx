@@ -1588,7 +1588,7 @@ export default function HomePage() {
                   ) : (
                     <>
                     {isEvent
-                      ? visibleOptions.map((market) => (
+                      ? visibleOptions.map((market: Event["markets"][number]) => (
                       <button
                         key={market.id}
                         onClick={() => router.push(`/market/${market.id}`)}
