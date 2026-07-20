@@ -1660,7 +1660,7 @@ export default function HomePage() {
                       ? item.markets.length > 2
                       : item.options.length > 2 (
                         <button
-                          onClick={() => router.push(isEvent ? `/event/${item.id}` : `/market/${item.id}`}
+                          onClick={() => router.push(isEvent ? `/event/${item.id}` : `/market/${item.id}`)}
                           className="
                             mt-2
                             w-full
