@@ -143,8 +143,8 @@ export default function MarketsPage() {
                 duration-200
               "
             >
-              <div className="flex items-center justify-between mb-3">
-
+              <div className="flex items-start justify-between mb-3">
+                <div>
                 <div className="text-emerald-400 text-sm">
                   {item.category}
                 </div>
@@ -168,6 +168,7 @@ export default function MarketsPage() {
                      EVENT • {item.markets.length} markets
                    </div>
                 )}
+                </div>
 
                 {item.is_live && (
                   <div className="
@@ -215,6 +216,7 @@ export default function MarketsPage() {
             </div>
         );
     })}
+        </div>
 
         {filteredItems.length === 0 && (
           <div className="
