@@ -1588,15 +1588,17 @@ export default function HomePage() {
                   ) : (
                     <>
                     {isEvent
-                      ? item.markets.slice(0, 2).map((market: Event["markets"][number]) => (
+                      ? item.markets.slice(0, 2).map((market: Event["markets"][number]) => {
 
-                        const odds = market.odds as Record<string, number> | undefined;
+                      const odds = market.odds as Record<string, number> | undefined;
 
-                        const leadingOutcome = odds
+                      const leadingOutcome = odds
                           ? Object.entries(odds).reduce((best, current) =>
                               current[1] > best[1] ? current : best
                             )
                           : null;
+
+                      return (
                         
                       <button
                         key={market.id}
