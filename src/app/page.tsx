@@ -1250,8 +1250,8 @@ export default function HomePage() {
 
           return (
             <motion.div
-              id={`market-${market.id}`}
-              key={market.id}
+              id={`market-${item.id}`}
+              key={item.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03 }}
@@ -1327,7 +1327,7 @@ export default function HomePage() {
                     {item.category}
                   </div>
 
-                  {market.is_live && (
+                  {item.is_live && (
                     <div className="
                       flex
                       items-center
