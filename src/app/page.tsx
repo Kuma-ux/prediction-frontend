@@ -1536,7 +1536,7 @@ export default function HomePage() {
                         onClick={() =>
                           buyPosition(item.id, "NO")
                         }
-                        disabled={trading === titem.id}
+                        disabled={trading === item.id}
                         className="
                           h-10
                           min-w-0
