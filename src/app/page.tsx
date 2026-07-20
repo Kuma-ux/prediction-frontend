@@ -1588,27 +1588,15 @@ export default function HomePage() {
                   ) : (
                     <>
                     {isEvent
-                      ? (() => {
-
-                      const firstMarket = item.markets[0];
-
-                      if (!firstMarket) return null;
-
-                      const odds = firstMarket.odds as Record<string, number> | undefined;
-
-                      const leadingOutcome = odds
-                          ? Object.entries(odds).reduce((best, current) =>
-                              current[1] > best[1] ? current : best
-                            )
-                          : null;
-
-                      return (
+                      ? item.markets.slice(0, 2).map((market: Event["markets"][number]) => (
                         
                       <button
-                        onClick={() => router.push(`/event/${item.id}`)}
+                        key={market.id}
+                        onClick={() => router.push(`/market/${market.id}`)}
                         className="
+                          h-9
                           w-full
-                          rounded-xl
+                          rounded-lg
                           border
                           border-white/10
                           bg-black/30
@@ -1619,31 +1607,11 @@ export default function HomePage() {
                           text-left
                         "
                       >
-                        <div className="text-[10px] uppercase text-zinc-500 mb-1">
-                          Leading Market
-                        </div>
-
-                        <div className="font-semibold text-sm text-white truncate">
-                          {firstMarket.title}
-                        </div>
-                        
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs text-zinc-400">
-                            {item.markets.length} markets
-                          </span>
-                          <span className="font-bold text-emerald-400">
-                            {leadingOutcome
-    ? `${leadingOutcome[0]} ${Math.round(leadingOutcome[1] * 100)}¢`
-    : "--"}
-                          </span>
-                        </div>
-
-                        <div className="mt-3 text-xs text-emerald-400 font-medium">
-                          View Event →
-                        </div>
+                        <span className="truncate text-[11px] text-white block">
+                          {market.title}
+                        </span>
                       </button>
-                    );
-                    })()
+                    ))
                     
                     : item.options.slice(0, 2).map((option: string) => (
                       <button
