@@ -1588,7 +1588,7 @@ export default function HomePage() {
                   ) : (
                     <>
                     {isEvent
-                      ? visibleOptions.map((market: Event["markets"][number]) => (
+                      ? item.markets.slice(0, 2).map((market: Event["markets"][number]) => (
                       <button
                         key={market.id}
                         onClick={() => router.push(`/market/${market.id}`)}
@@ -1619,7 +1619,7 @@ export default function HomePage() {
                       </button>
                     ))
                     
-                    : visibleOptions.map((option) => (
+                    : item.options.slice(0, 2).map((option: string) => (
                       <button
                         key={option}
                         onClick={() => buyPosition(item.id, option)}
@@ -1666,9 +1666,9 @@ export default function HomePage() {
                       </button>
                     ))}
 
-                    {(isEvent
+                    {isEvent
                       ? item.markets.length > 2
-                      : item.options.length > 2) && (
+                      : item.options.length > 2 ? (
                         <button
                           onClick={() => router.push(isEvent ? `/event/${item.id}` : `/market/${item.id}`)}
                           className="
@@ -1684,7 +1684,7 @@ export default function HomePage() {
     ? item.markets.length - 2
     : item.options.length - 2}
                         </button>
-                      )}
+                      ) : null}
                     </>
                   )}
                 </div>
