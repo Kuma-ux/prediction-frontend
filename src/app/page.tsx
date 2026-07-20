@@ -1479,7 +1479,7 @@ export default function HomePage() {
                   onChange={(e) => 
                     setBetAmounts(prev => ({
                       ...prev,
-                      [market.id]: e.target.value,
+                      [item.id]: e.target.value,
                     }))
                   }
                   placeholder="Bet amount"
@@ -1491,9 +1491,9 @@ export default function HomePage() {
                     <>
                       <button
                         onClick={() =>
-                          buyPosition(market.id, "YES")
+                          buyPosition(item.id, "YES")
                         }
-                        disabled={trading === market.id}
+                        disabled={trading === item.id}
                         className="
                           h-10
                           min-w-0
@@ -1534,9 +1534,9 @@ export default function HomePage() {
 
                       <button
                         onClick={() =>
-                          buyPosition(market.id, "NO")
+                          buyPosition(item.id, "NO")
                         }
-                        disabled={trading === market.id}
+                        disabled={trading === titem.id}
                         className="
                           h-10
                           min-w-0
