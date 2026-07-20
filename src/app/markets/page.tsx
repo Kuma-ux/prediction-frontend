@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 export default function MarketsPage() {
   const [markets, setMarkets] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] =
     useState("Trending");
 
@@ -22,20 +23,22 @@ export default function MarketsPage() {
       const data = await res.json();
 
       if (data.success) {
-        setMarkets(data.markets);
+        setMarkets(data.standaloneMarkets ?? data.markets);
+        setEvents(data.events ?? []);
       }
     }
 
     loadMarkets();
   }, []);
 
-  // Automatically build category tabs from existing markets
+  const allItems = [...events, ...markets];
+  
   const categories = [
     "Trending",
     ...Array.from(
       new Set(
-        markets
-          .map((m: any) => m.category)
+        allItems
+          .map((item: any) => item.category)
           .filter(Boolean)
       )
     ),
@@ -43,14 +46,14 @@ export default function MarketsPage() {
 
   const filteredMarkets =
     selectedCategory === "Trending"
-      ? [...markets].sort(
+      ? [...events, ...markets].sort(
           (a: any, b: any) =>
             (b.totalvolume || 0) -
             (a.totalvolume || 0)
         )
-      : markets.filter(
-          (market: any) =>
-            market.category?.toLowerCase() ===
+      : [...events, ...markets].filter(
+          (item: any) =>
+            item.category?.toLowerCase() ===
             selectedCategory.toLowerCase()
         );
 
@@ -106,7 +109,7 @@ export default function MarketsPage() {
 
         {/* MARKET COUNT */}
         <div className="mb-8 text-zinc-500 text-sm">
-          Showing {filteredMarkets.length} markets
+          Showing {filteredItems.length} items
           {selectedCategory !== "Trending" &&
             ` in ${selectedCategory}`}
         </div>
@@ -114,11 +117,18 @@ export default function MarketsPage() {
         {/* MARKETS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
 
-          {filteredMarkets.map((market: any) => (
+          {filteredMarkets.map((item: any) => {
+            const isEvent = "markets" in item;
+
+            return (
             <div
-              key={market.id}
+              key={item.id}
               onClick={() =>
-                router.push(`/market/${market.id}`)
+                router.push(
+          isEvent
+            ? `/event/${item.id}`
+            : `/market/${item.id}`
+        )
               }
               className="
                 cursor-pointer
@@ -136,10 +146,30 @@ export default function MarketsPage() {
               <div className="flex items-center justify-between mb-3">
 
                 <div className="text-emerald-400 text-sm">
-                  {market.category}
+                  {item.category}
                 </div>
 
-                {market.is_live && (
+                {isEvent && (
+                   <div
+                     className="
+                       mt-2
+                       inline-flex
+                       px-2
+                       py-1
+                       rounded-full
+                       bg-blue-500/10
+                       border
+                       border-blue-500/30
+                       text-blue-400
+                       text-[10px]
+                       font-bold
+                     "
+                    >
+                     EVENT • {item.markets.length} markets
+                   </div>
+                )}
+
+                {item.is_live && (
                   <div className="
                     px-2
                     py-1
@@ -157,11 +187,11 @@ export default function MarketsPage() {
               </div>
 
               <h3 className="font-bold text-lg mb-3 line-clamp-2">
-                {market.title}
+                {item.title}
               </h3>
 
               <p className="text-zinc-500 text-sm line-clamp-3 mb-4">
-                {market.description}
+                {item.description}
               </p>
 
               <div className="flex items-center justify-between pt-4 border-t border-white/5">
@@ -172,14 +202,14 @@ export default function MarketsPage() {
                   </div>
 
                   <div className="font-bold">
-                    K{market.totalvolume || 0}
+                    K{item.totalvolume || 0}
                   </div>
                 </div>
 
                 <div className="text-zinc-500 text-xs">
-                  {new Date(
-                    market.end_date
-                  ).toLocaleDateString()}
+                  {item.end_date
+  ? new Date(item.end_date).toLocaleDateString()
+  : "Multiple markets"}
                 </div>
               </div>
             </div>
