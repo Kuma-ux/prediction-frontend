@@ -3,6 +3,24 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+type Event = {
+    id: number;
+
+    title: string;
+
+    category: string;
+
+    description?: string;
+
+    start_date: string;
+
+    end_date?: string;
+
+    image?: string;
+
+    featured: boolean;
+}
+
 type Market = {
   id: number;
   title: string;
@@ -15,6 +33,8 @@ type Market = {
   resolved: boolean;
   shutdown?: boolean;
   outcome: string[] | null;
+
+  event_id?: number | null;
 
   options: string[];
 
@@ -60,6 +80,8 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [featured, setFeatured] = useState(false);
   const [markets, setMarkets] = useState<Market[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [eventId, setEventId] = useState<number | "">("");
   const [marketType, setMarketType] = useState("standard");
   const [selectedOutcomes, setSelectedOutcomes] = useState<
     Record<number, string[]>
@@ -302,6 +324,7 @@ export default function AdminPage() {
             bundle_predictions: marketType === "bundle" ? predictions : [],
             options,
             end_date: endDate,
+            event_id: eventId || null,
             featured,
             is_live: isLive,
             live_duration_minutes: Number(liveDuration),
@@ -436,6 +459,16 @@ export default function AdminPage() {
 
       if (marketData.success) {
         setMarkets(marketData.markets || []);
+      }
+
+      const eventRes = await fetch(
+        "https://api.theprobability.site/events"
+      );
+
+      const eventData = await eventRes.json();
+
+      if (eventData.success) {
+        setEvents(eventData.events);
       }
 
     } catch (err) {
@@ -1024,6 +1057,31 @@ export default function AdminPage() {
           >
             <option value="standard">Standard Market</option>
             <option value="bundle">Bundle Market</option>
+          </select>
+
+          <select
+            value={eventId}
+            onChange={(e) =>
+              setEventId(
+                e.target.value === ""
+                  ? ""
+                  : Number(e.target.value)
+              )
+            }
+            className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+          >
+            <option value="">
+              Standalone Market
+            </option>
+
+            {events.map(event => (
+              <option
+                key={event.id}
+                value={event.id}
+              >
+                {event.title}
+              </option>
+            ))}
           </select>
 
           <input
