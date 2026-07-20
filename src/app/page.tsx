@@ -425,7 +425,25 @@ export default function HomePage() {
 
   const TRENDING_LIMIT = 32;
 
-  const limitedMarkets = normalMarkets.slice(0, TRENDING_LIMIT);
+  const homepageItems = [
+  ...events,
+  ...normalMarkets,
+  ].slice(0, TRENDING_LIMIT);
+
+  type Event = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  featured?: boolean;
+
+  markets: {
+    id: number;
+    title: string;
+    odds?: number;
+    volume?: number;
+  }[];
+  };
 
   const liveScrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -1222,9 +1240,13 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
-          {limitedMarkets.map((market, index) => {
+          {homepageItems.map((item, index) => {
 
-          const visibleOptions = market.options?.slice(0, 2) || [];
+          const isEvent = "markets" in item;
+
+          const visibleOptions = isEvent
+            ? item.markets.slice(0, 2)
+            : item.options?.slice(0, 2) || [];
 
           return (
             <motion.div
@@ -1302,7 +1324,7 @@ export default function HomePage() {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
                   <div className="text-[11px] uppercase tracking-wider text-emerald-400">
-                    {market.category}
+                    {item.category}
                   </div>
 
                   {market.is_live && (
@@ -1367,7 +1389,7 @@ export default function HomePage() {
                         </div>
                       )}
                       <h3
-                        onClick={() => router.push(`/market/${market.id}`)}
+                        onClick={() => router.push(isEvent ? `/event/${item.id}` : `/market/${item.id}`)}
                         className="
                           text-[14px]
                           font-semibold
@@ -1378,7 +1400,7 @@ export default function HomePage() {
                           transition
                         "
                       >
-                        {market.title}
+                        {item.title}
                       </h3>
                       </div>
                 </div>
@@ -1390,7 +1412,7 @@ export default function HomePage() {
               </div>
 
                 <p className="text-[9px] leading-3 line-clamp-2 text-zinc-500 mb-3">
-                  {market.description}
+                  {item.description}
                 </p>
 
                 {market.is_live && (
@@ -1555,7 +1577,39 @@ export default function HomePage() {
                     </>
                   ) : (
                     <>
-                    {visibleOptions.map((option) => (
+                    {isEvent
+                      ? visibleOptions.map((market) => (
+                      <button
+                        key={market.id}
+                        onClick={() => router.push(`/market/${market.id}`)}
+                        className="
+                          h-9
+                          min-w-0
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-black/30
+                          hover:bg-emerald-500/10
+                          hover:border-emerald-500/40
+                          transition-all
+                          px-2
+                          overflow-hidden
+                        "
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="truncate text-[11px]">
+                            {market.title}
+                          </span>
+                          <span className="font-bold text-emerald-400">
+                            {market.odds != null
+                                ? `${Math.round(market.odds * 100)}¢`
+                                : "--"}
+                          </span>
+                        </div>
+                      </button>
+                    ))
+                    
+                    : visibleOptions.map((option) => (
                       <button
                         key={option}
                         onClick={() => buyPosition(market.id, option)}
@@ -1602,10 +1656,11 @@ export default function HomePage() {
                       </button>
                     ))}
 
-                    {market.options &&
-                      market.options.length > 2 && (
+                    {isEvent
+                      ? item.markets.length > 2
+                      : item.options.length > 2 (
                         <button
-                          onClick={() => router.push(`/market/${market.id}`)}
+                          onClick={() => router.push(isEvent ? `/event/${item.id}` : `/market/${item.id}`}
                           className="
                             mt-2
                             w-full
@@ -1615,7 +1670,9 @@ export default function HomePage() {
                             transition
                           "
                         >
-                          +{market.options.length - 2} more outcomes
+                          +{isEvent
+    ? item.markets.length - 2
+    : item.options.length - 2}
                         </button>
                       )}
                     </>
@@ -1630,7 +1687,10 @@ export default function HomePage() {
                     </div>
 
                     <div className="text-xs font-bold">
-                      KES{market.totalvolume}
+                      KES
+    {isEvent
+        ? item.totalvolume
+        : item.totalvolume}
                     </div>
                   </div>
                 </div>
