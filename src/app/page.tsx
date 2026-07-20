@@ -1628,7 +1628,8 @@ export default function HomePage() {
                           </span>
                         </div>
                       </button>
-                    )}
+                    );
+                    })
                     
                     : item.options.slice(0, 2).map((option: string) => (
                       <button
