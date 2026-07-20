@@ -43,6 +43,8 @@ export default function HomePage() {
   const [loadingDeposit, setLoadingDeposit] = useState(false);
   const [trading, setTrading] = useState<number | null>(null);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [events, setEvents] = useState<any[]>([]);
+  const [standaloneMarkets, setStandaloneMarkets] = useState<Market[]>([]);
   const [activeSlide, setActiveSlide] = useState(0);
   const [portfolioStats, setPortfolioStats] = useState({
     marketsTraded: 0,
@@ -257,6 +259,8 @@ export default function HomePage() {
       const data = await res.json();
       if (data.success) {
         setMarkets(data.markets);
+        setEvents(data.events);
+        setStandaloneMarkets(data.standaloneMarkets);
       }
     } catch (err) {
       console.error(err);
