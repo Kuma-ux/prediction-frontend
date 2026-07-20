@@ -1588,9 +1588,13 @@ export default function HomePage() {
                   ) : (
                     <>
                     {isEvent
-                      ? item.markets.slice(0, 2).map((market: Event["markets"][number]) => {
+                      ? (() => {
 
-                      const odds = market.odds as Record<string, number> | undefined;
+                      const firstMarket = item.markets[0];
+
+                      if (!firstMarket) return null;
+
+                      const odds = firstMarket.odds as Record<string, number> | undefined;
 
                       const leadingOutcome = odds
                           ? Object.entries(odds).reduce((best, current) =>
@@ -1601,25 +1605,31 @@ export default function HomePage() {
                       return (
                         
                       <button
-                        key={market.id}
-                        onClick={() => router.push(`/market/${market.id}`)}
+                        onClick={() => router.push(`/event/${item.id}`)}
                         className="
-                          h-9
-                          min-w-0
-                          rounded-lg
+                          w-full
+                          rounded-xl
                           border
                           border-white/10
                           bg-black/30
                           hover:bg-emerald-500/10
                           hover:border-emerald-500/40
-                          transition-all
+                          transition
                           px-2
-                          overflow-hidden
+                          text-left
                         "
                       >
-                        <div className="flex items-center justify-between">
-                          <span className="truncate text-[11px]">
-                            {market.title}
+                        <div className="text-[10px] uppercase text-zinc-500 mb-1">
+                          Leading Market
+                        </div>
+
+                        <div className="font-semibold text-sm text-white truncate">
+                          {firstMarket.title}
+                        </div>
+                        
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-xs text-zinc-400">
+                            {item.markets.length} markets
                           </span>
                           <span className="font-bold text-emerald-400">
                             {leadingOutcome
@@ -1627,9 +1637,13 @@ export default function HomePage() {
     : "--"}
                           </span>
                         </div>
+
+                        <div className="mt-3 text-xs text-emerald-400 font-medium">
+                          View Event →
+                        </div>
                       </button>
                     );
-                    })
+                    })()
                     
                     : item.options.slice(0, 2).map((option: string) => (
                       <button
