@@ -44,7 +44,7 @@ export default function MarketsPage() {
     ),
   ];
 
-  const filteredMarkets =
+  const filteredItems =
     selectedCategory === "Trending"
       ? [...events, ...markets].sort(
           (a: any, b: any) =>
@@ -117,7 +117,7 @@ export default function MarketsPage() {
         {/* MARKETS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
 
-          {filteredMarkets.map((item: any) => {
+          {filteredItems.map((item: any) => {
             const isEvent = "markets" in item;
 
             return (
@@ -213,10 +213,10 @@ export default function MarketsPage() {
                 </div>
               </div>
             </div>
-          }
-        </div>
+        );
+    })}
 
-        {filteredMarkets.length === 0 && (
+        {filteredItems.length === 0 && (
           <div className="
             text-center
             py-20
