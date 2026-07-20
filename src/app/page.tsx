@@ -1448,7 +1448,7 @@ export default function HomePage() {
                       <div className="space-y-1 max-h-16 overflow-y-auto pr-1">
 
                         {item.bundle_predictions.map(
-                          (prediction, i) => (
+                          (prediction: string, i: number) => (
 
                             <div
                             key={i}
