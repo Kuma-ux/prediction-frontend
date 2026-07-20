@@ -213,7 +213,7 @@ export default function MarketsPage() {
                 </div>
               </div>
             </div>
-          ))}
+          }
         </div>
 
         {filteredMarkets.length === 0 && (
