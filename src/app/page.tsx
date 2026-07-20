@@ -1475,7 +1475,7 @@ export default function HomePage() {
                   )}
 
                 <input
-                  value={betAmounts[market.id] || ""}
+                  value={betAmounts[item.id] || ""}
                   onChange={(e) => 
                     setBetAmounts(prev => ({
                       ...prev,
