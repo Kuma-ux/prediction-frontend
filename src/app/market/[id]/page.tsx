@@ -724,7 +724,10 @@ export default function MarketPage() {
                       {displayActivity.map((item) => (
                         <div key={item.id} className="bg-black border border-white/10 rounded-sm p-4 text-sm">
                           <div className="text-zinc-300">
-                            <UserPreview username={item.username} /> {item.action}{" "}
+                            <span className="font-bold text-white">
+                              {item.username}
+                            </span>{" "}
+                            {item.action}{" "}
                             <span className="font-bold tabular-nums">{item.shares}</span> shares of{" "}
                             <span className="text-emerald-400">{item.outcome}</span> at{" "}
                             <span className="font-bold tabular-nums">{item.price}¢</span>
