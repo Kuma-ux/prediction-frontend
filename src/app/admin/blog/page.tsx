@@ -13,10 +13,6 @@ interface Blog {
   published_at: string;
 }
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://prediction-backend-bzgl.onrender.com";
-
 export default function BlogHome() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +24,7 @@ export default function BlogHome() {
   async function loadBlogs() {
     try {
       const res = await fetch(
-        "${API_BASE_URL}/blog",
+        "https://api.theprobability.site/blog",
         {
           cache: "no-store",
         }
