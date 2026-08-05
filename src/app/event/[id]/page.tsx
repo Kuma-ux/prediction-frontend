@@ -169,6 +169,7 @@ return (
                   <div>
                     KES {Number(market.totalvolume ?? 0).toLocaleString()}
                   </div>
+                </div>
 
                   <div className="flex gap-3">
                     {event.stream_url && (
