@@ -8,9 +8,11 @@ export default function EventPage() {
   const router = useRouter();
   const [event, setEvent] = useState<any>(null);
   const [showStream, setShowStream] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     loadEvent();
+    checkAuth();
   }, []);
 
   async function loadEvent() {
@@ -19,6 +21,22 @@ export default function EventPage() {
 
     if (data.success) {
       setEvent(data.event);
+    }
+  }
+
+  async function checkAuth() {
+    try {
+      const res = await fetch(
+        "https://api.theprobability.site/auth/me",
+        {
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+      setLoggedIn(data.success);
+  } catch {
+      setLoggedIn(false);
     }
   }
 
@@ -42,7 +60,14 @@ export default function EventPage() {
           <p className="text-zinc-500 max-w-3xl">{event.description}</p>
           {event.stream_url && (
             <button
-              onClick={() => setShowStream(true)}
+              onClick={() => {
+                if (!loggedIn) {
+                  router.push("/login");
+                  return;
+                }
+                
+                setShowStream(true)
+              }}
               className="
                 mt-6
                 bg-red-600
