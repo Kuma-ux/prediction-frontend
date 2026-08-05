@@ -11,7 +11,6 @@ export default function MarketPage() {
   const router = useRouter();
 
   const [market, setMarket] = useState<any>(null);
-  const [showStream, setShowStream] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [betAmount, setBetAmount] = useState("");
   const [loading, setLoading] = useState(false);
@@ -550,25 +549,26 @@ export default function MarketPage() {
               &gt; Enter Chat
             </button>
 
-            <button
-              onClick={() => setShowStream(true)}
-              className="
-                w-full
-                mt-3
-                bg-red-500
-                hover:bg-red-400
-                transition
-                rounded-sm
-                py-4
-                font-bold
-                text-white
-                uppercase
-                text-sm
-                tracking-wide
-              "
-            >
-              ▶ Watch Game
-            </button>
+            {market.stream_url && (
+              <button
+                onClick={() =>
+                  window.open(
+                    market.stream_url!,
+                    "_blank"
+                  )
+                }
+                className="
+                  bg-red-600
+                  hover:bg-red-500
+                  px-5
+                  py-3
+                  rounded-xl
+                  font-bold
+                "
+              >
+                Watch Live
+              </button>
+           )}
 
             <div className="mt-8 pt-6 border-t border-white/10">
               <div className="text-zinc-600 text-xs uppercase tracking-widest">Total Volume</div>
@@ -661,49 +661,7 @@ export default function MarketPage() {
                       </div>
                     </>
                   )}
-
-                  {showStream && (
-                    <div
-                      className="
-                        fixed
-                        inset-0
-                        z-50
-                        bg-black/90
-                        flex
-                        items-center
-                        justify-center
-                        p-4
-                      "
-                    >
-                      <div className="relative w-full max-w-7xl h-[90vh] bg-black rounded-lg overflow-hidden border border-white/10">
-
-                        <button
-                          onClick={() => setShowStream(false)}
-                          className="
-                            absolute
-                            top-4
-                            right-4
-                            z-10
-                            bg-red-500
-                            hover:bg-red-400
-                            px-4
-                            py-2
-                            rounded
-                            font-bold
-                          "
-                        >
-                          ✕ Close
-                        </button>
-
-                        <iframe
-                          src="https://www.didizhibo.com/"
-                          className="w-full h-full"
-                          allowFullScreen
-                        />
-                      </div>
-                    </div>
-                 )}
-
+                  
                   {activeTab === "comments" && (
                     <div className="space-y-4 p-4">
                       {comments.length === 0 && (
