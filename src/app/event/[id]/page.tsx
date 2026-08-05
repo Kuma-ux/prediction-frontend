@@ -190,7 +190,7 @@ return (
                         Watch Live
                       </button>
 
-                </div>
+                )}
 
                 <button
                   onClick={(e) => {
