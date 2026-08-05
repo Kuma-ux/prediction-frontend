@@ -29,6 +29,7 @@ type Market = {
   category?: string;
   end_date?: string;
   market_type?: string;
+  stream_url?: string | null;
 
   resolved: boolean;
   shutdown?: boolean;
@@ -101,6 +102,9 @@ export default function AdminPage() {
   const [emailSubject, setEmailSubject] = useState("");
   const [emailBody, setEmailBody] = useState("");
   const [previewEmail, setPreviewEmail] = useState(false);
+
+  const [streamUrl, setStreamUrl] = useState("");
+  const [editStreamUrl, setEditStreamUrl] = useState("");
 
   async function searchUsers(query: string) {
     setUserQuery(query);
@@ -375,6 +379,7 @@ export default function AdminPage() {
             event_id: eventId || null,
             featured,
             is_live: isLive,
+            stream_url: streamUrl,
             live_duration_minutes: Number(liveDuration),
           }),
         }
@@ -398,6 +403,7 @@ export default function AdminPage() {
       setDescription("");
       setFeatured(false);
       setRules("");
+      setStreamUrl("");
 
       loadAdmin();
     } catch (err) {
@@ -724,6 +730,10 @@ export default function AdminPage() {
       market.category || ""
     );
 
+    setEditStreamUrl(
+      market.stream_url || ""
+    );
+
     setEditEndDate(
       market.end_date
         ? new Date(market.end_date)
@@ -762,6 +772,7 @@ export default function AdminPage() {
             category: editCategory,
             end_date: editEndDate,
             featured: editFeatured,
+            stream_url: editStreamUrl,
             bundle_predictions:
               editBundlePredictions
                 .split("\n")
@@ -1154,6 +1165,13 @@ export default function AdminPage() {
           placeholder="Description"
           value={eventDescription}
           onChange={(e)=>setEventDescription(e.target.value)}
+          />
+
+          <input
+              value={streamUrl}
+              onChange={(e)=>setStreamUrl(e.target.value)}
+              placeholder="Livestream URL (optional)"
+              className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
           />
 
           <input
