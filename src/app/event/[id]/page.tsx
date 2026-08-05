@@ -16,7 +16,7 @@ export default function EventPage() {
   }, []);
 
   async function loadEvent() {
-    const res = await fetch(`https://api.theprobability.site/events/${id}`);
+    const res = await fetch(`https://prediction-backend-bzgl.onrender.com/events/${id}`);
     const data = await res.json();
 
     if (data.success) {
@@ -27,7 +27,7 @@ export default function EventPage() {
   async function checkAuth() {
     try {
       const res = await fetch(
-        "https://api.theprobability.site/auth/me",
+        "https://prediction-backend-bzgl.onrender.com/auth/me",
         {
           credentials: "include",
         }
