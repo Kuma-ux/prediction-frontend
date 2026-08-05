@@ -170,9 +170,33 @@ return (
                     KES {Number(market.totalvolume ?? 0).toLocaleString()}
                   </div>
 
+                  <div className="flex gap-3">
+                    {event.stream_url && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(event.stream_url, "_blank");
+                        }}
+                        className="
+                          bg-red-600
+          hover:bg-red-500
+          text-white
+          px-5
+          py-2
+          rounded-lg
+          font-bold
+                        "
+                      >
+                        Watch Live
+                      </button>
+
                 </div>
 
                 <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/market/${market.id}`);
+                  }}
                   className="
                     bg-emerald-500
                     hover:bg-emerald-400
