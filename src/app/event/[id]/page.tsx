@@ -158,62 +158,63 @@ return (
 
               </div>
 
-              <div className="flex justify-between mt-6 border-t border-white/10 pt-4">
+              <div className="flex justify-between items-center mt-6 border-t border-white/10 pt-4">
 
-                <div>
+  <div>
+    <div className="text-xs text-zinc-500">
+      Volume
+    </div>
 
-                  <div className="text-xs text-zinc-500">
-                    Volume
-                  </div>
+    <div>
+      KES {Number(market.totalvolume ?? 0).toLocaleString()}
+    </div>
+  </div>
 
-                  <div>
-                    KES {Number(market.totalvolume ?? 0).toLocaleString()}
-                  </div>
-                </div>
+  <div className="flex gap-3">
 
-                  <div className="flex gap-3">
-                    {event.stream_url && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open(event.stream_url, "_blank");
-                        }}
-                        className="
-                          bg-red-600
+    {event.stream_url && (
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          window.open(event.stream_url, "_blank");
+        }}
+        className="
+          bg-red-600
           hover:bg-red-500
           text-white
           px-5
           py-2
           rounded-lg
           font-bold
-                        "
-                      >
-                        Watch Live
-                      </button>
+        "
+      >
+        Watch Live
+      </button>
+    )}
 
-                )}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        router.push(`/market/${market.id}`);
+      }}
+      className="
+        bg-emerald-500
+        hover:bg-emerald-400
+        text-black
+        px-5
+        py-2
+        rounded-lg
+        font-bold
+      "
+    >
+      Open Market →
+    </button>
 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(`/market/${market.id}`);
-                  }}
-                  className="
-                    bg-emerald-500
-                    hover:bg-emerald-400
-                    text-black
-                    px-5
-                    rounded-lg
-                    font-bold
-                  "
-                >
-                  Open Market →
-                </button>
+  </div>
 
-              </div>
+</div>
 
-            </div>
-
+</div>
           );
 
         })}
