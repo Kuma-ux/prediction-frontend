@@ -94,7 +94,7 @@ export default function AdminPage() {
   const [eventFeatured, setEventFeatured] = useState(false);
   const [eventStreamUrl, setEventStreamUrl] = useState("");
   const [marketType, setMarketType] = useState("standard");
-  const [selectedOutcomes, setSelectedOutcomes] = useState
+  const [selectedOutcomes, setSelectedOutcomes] = useState<
     Record<number, string[]>
   >({});
 
