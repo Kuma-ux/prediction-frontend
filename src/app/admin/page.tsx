@@ -1168,6 +1168,13 @@ export default function AdminPage() {
           />
 
           <input
+              value={streamUrl}
+              onChange={(e)=>setStreamUrl(e.target.value)}
+              placeholder="Livestream URL (optional)"
+              className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+          />
+
+          <input
           type="datetime-local"
           value={eventStartDate}
           onChange={(e)=>setEventStartDate(e.target.value)}
@@ -1254,13 +1261,6 @@ export default function AdminPage() {
               resize-none
             "
             />
-
-          <input
-              value={streamUrl}
-              onChange={(e)=>setStreamUrl(e.target.value)}
-              placeholder="Livestream URL (optional)"
-              className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
-          />
 
           <textarea
             value={rules}
