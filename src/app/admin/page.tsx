@@ -19,6 +19,8 @@ type Event = {
     image?: string;
 
     featured: boolean;
+
+    stream_url?: string | null;
 }
 
 type Market = {
@@ -90,8 +92,9 @@ export default function AdminPage() {
   const [eventEndDate, setEventEndDate] = useState("");
   const [eventImage, setEventImage] = useState("");
   const [eventFeatured, setEventFeatured] = useState(false);
+  const [eventStreamUrl, setEventStreamUrl] = useState("");
   const [marketType, setMarketType] = useState("standard");
-  const [selectedOutcomes, setSelectedOutcomes] = useState<
+  const [selectedOutcomes, setSelectedOutcomes] = useState
     Record<number, string[]>
   >({});
 
@@ -225,6 +228,7 @@ export default function AdminPage() {
                 end_date: eventEndDate,
                 image: eventImage,
                 featured: eventFeatured,
+                stream_url: eventStreamUrl,
             }),
         }
     );
@@ -245,6 +249,7 @@ export default function AdminPage() {
     setEventEndDate("");
     setEventImage("");
     setEventFeatured(false);
+    setEventStreamUrl("");
 
     loadAdmin();
   }
@@ -1100,6 +1105,80 @@ export default function AdminPage() {
           </div>
         )}
       </div>
+
+      <div className="border border-white/10 rounded-2xl bg-zinc-900 p-6 mb-10">
+
+        <h2 className="text-2xl font-bold mb-4">
+          Create Event
+        </h2>
+
+        <input
+          placeholder="Event title"
+          value={eventTitle}
+          onChange={(e)=>setEventTitle(e.target.value)}
+          className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+        />
+
+        <input
+          placeholder="Category"
+          value={eventCategory}
+          onChange={(e)=>setEventCategory(e.target.value)}
+          className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+        />
+
+        <textarea
+          placeholder="Description"
+          value={eventDescription}
+          onChange={(e)=>setEventDescription(e.target.value)}
+          className="w-full h-28 mb-3 bg-black border border-white/10 p-3 rounded resize-none"
+        />
+
+        <input
+          value={eventStreamUrl}
+          onChange={(e)=>setEventStreamUrl(e.target.value)}
+          placeholder="Livestream URL (optional)"
+          className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+        />
+
+        <input
+          type="datetime-local"
+          value={eventStartDate}
+          onChange={(e)=>setEventStartDate(e.target.value)}
+          className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+        />
+
+        <input
+          type="datetime-local"
+          value={eventEndDate}
+          onChange={(e)=>setEventEndDate(e.target.value)}
+          className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+        />
+
+        <input
+          placeholder="Image URL"
+          value={eventImage}
+          onChange={(e)=>setEventImage(e.target.value)}
+          className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+        />
+
+        <div className="flex items-center gap-3 mb-4">
+          <input
+            type="checkbox"
+            checked={eventFeatured}
+            onChange={(e)=>setEventFeatured(e.target.checked)}
+            className="w-5 h-5"
+          />
+          <span>Featured</span>
+        </div>
+
+        <button
+          onClick={createEvent}
+          className="bg-emerald-500 text-black px-5 py-3 rounded-xl font-bold"
+        >
+          Create Event
+        </button>
+      </div>
+
       <div className="grid gap-6">
         <div className="mb-10 border border-white/10 p-6 rounded-2xl bg-zinc-900">
           <h2 className="text-2xl font-bold mb-4">Create Market</h2>
@@ -1143,71 +1222,6 @@ export default function AdminPage() {
             ))}
           </select>
 
-          <div className="border border-white/10 rounded-2xl bg-zinc-900 p-6 mb-10">
-
-          <h2 className="text-2xl font-bold mb-4">
-          Create Event
-          </h2>
-
-          <input
-          placeholder="Event title"
-          value={eventTitle}
-          onChange={(e)=>setEventTitle(e.target.value)}
-          />
-
-          <input
-          placeholder="Category"
-          value={eventCategory}
-          onChange={(e)=>setEventCategory(e.target.value)}
-          />
-
-          <textarea
-          placeholder="Description"
-          value={eventDescription}
-          onChange={(e)=>setEventDescription(e.target.value)}
-          />
-
-          <input
-              value={streamUrl}
-              onChange={(e)=>setStreamUrl(e.target.value)}
-              placeholder="Livestream URL (optional)"
-              className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
-          />
-
-          <input
-          type="datetime-local"
-          value={eventStartDate}
-          onChange={(e)=>setEventStartDate(e.target.value)}
-          />
-
-          <input
-          type="datetime-local"
-          value={eventEndDate}
-          onChange={(e)=>setEventEndDate(e.target.value)}
-          />
-
-          <input
-          placeholder="Image URL"
-          value={eventImage}
-          onChange={(e)=>setEventImage(e.target.value)}
-          />
-
-
-          <label>
-          <input
-              type="checkbox"
-              checked={eventFeatured}
-              onChange={(e)=>setEventFeatured(e.target.checked)}
-          />
-
-          Featured
-          </label>
-
-          <button onClick={createEvent}>
-          Create Event
-          </button>
-          </div>
-
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -1242,6 +1256,13 @@ export default function AdminPage() {
             type="datetime-local"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
+            className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+          />
+
+          <input
+            value={streamUrl}
+            onChange={(e)=>setStreamUrl(e.target.value)}
+            placeholder="Livestream URL (optional)"
             className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
           />
 
@@ -1615,6 +1636,15 @@ export default function AdminPage() {
             />
 
             <input
+              value={editStreamUrl}
+              onChange={(e) =>
+                setEditStreamUrl(e.target.value)
+              }
+              placeholder="Livestream URL (optional)"
+              className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
+            />
+
+            <input
               type="datetime-local"
               value={editEndDate}
               onChange={(e) =>
@@ -1751,7 +1781,7 @@ export default function AdminPage() {
               </button>
 
               <button
-                onClick={() => insertHtml("<em>", "</em>")}
+                onClick={() => insertHtml("<u>", "</u>")}
                 className="px-3 py-1 rounded bg-zinc-800"
               >
                 Underline
