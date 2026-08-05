@@ -2,10 +2,6 @@
 
 import { useState } from "react";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://prediction-backend-bzgl.onrender.com";
-
 export default function NewBlogPage() {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -46,7 +42,7 @@ export default function NewBlogPage() {
 
   async function publishBlog() {
     const res = await fetch(
-      "${API_BASE_URL}/admin/blog/create",
+      "https://api.theprobability.site/admin/blog/create",
       {
         method: "POST",
         credentials: "include",
