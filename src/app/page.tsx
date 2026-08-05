@@ -72,7 +72,7 @@ export default function HomePage() {
   async function loadPortfolio() {
     try {
       const res = await fetch(
-        "https://api.theprobability.site/portfolio",
+        "https://prediction-backend-bzgl.onrender.com/portfolio",
         {
           credentials: "include",
         }
@@ -91,7 +91,7 @@ export default function HomePage() {
   async function loadListings() {
     try {
       const res = await fetch(
-        "https://api.theprobability.site/listings"
+        "https://prediction-backend-bzgl.onrender.com/listings"
       );
 
       const data = await res.json();
@@ -108,7 +108,7 @@ export default function HomePage() {
     try{
 
       const res = await fetch(
-        "https://api.theprobability.site/listings/create",
+        "https://prediction-backend-bzgl.onrender.com/listings/create",
         {
           method: "POST",
           headers: {
@@ -149,7 +149,7 @@ export default function HomePage() {
   async function loadChart(marketId: number) {
     try {
       const res = await fetch(
-        `https://api.theprobability.site/history/${marketId}`
+        `https://prediction-backend-bzgl.onrender.com/history/${marketId}`
       );
 
       const data = await res.json();
@@ -255,7 +255,7 @@ export default function HomePage() {
 
   async function loadMarkets() {
     try {
-      const res = await fetch("https://api.theprobability.site/markets");
+      const res = await fetch("https://prediction-backend-bzgl.onrender.com/markets");
       const data = await res.json();
       if (data.success) {
         setMarkets(data.markets);
@@ -269,7 +269,7 @@ export default function HomePage() {
 
   async function loadUser() {
     try {
-      const res = await fetch("https://api.theprobability.site/auth/me", {
+      const res = await fetch("https://prediction-backend-bzgl.onrender.com/auth/me", {
         credentials: "include",
       });
 
@@ -303,7 +303,7 @@ export default function HomePage() {
       }
 
       const res = await fetch(
-        "https://api.theprobability.site/listings/buy",
+        "https://prediction-backend-bzgl.onrender.com/listings/buy",
         {
           method: "POST",
           headers: {
@@ -355,7 +355,7 @@ export default function HomePage() {
 
       setLoadingDeposit(true);
 
-      const res = await fetch("https://api.theprobability.site/paystack/initialize", {
+      const res = await fetch("https://prediction-backend-bzgl.onrender.com/paystack/initialize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -737,7 +737,7 @@ export default function HomePage() {
                   <button
                     onClick={async () => {
                       await fetch(
-                        "https://api.theprobability.site/auth/logout",
+                        "https://prediction-backend-bzgl.onrender.com/auth/logout",
                         {
                           method: "POST",
                           credentials: "include",
