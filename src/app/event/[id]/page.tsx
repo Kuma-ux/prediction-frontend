@@ -7,6 +7,7 @@ export default function EventPage() {
   const { id } = useParams();
   const router = useRouter();
   const [event, setEvent] = useState<any>(null);
+  const [showStream, setShowStream] = useState(false);
 
   useEffect(() => {
     loadEvent();
@@ -41,7 +42,7 @@ export default function EventPage() {
           <p className="text-zinc-500 max-w-3xl">{event.description}</p>
           {event.stream_url && (
             <button
-              onClick={() => window.open(event.stream_url, "_blank")}
+              onClick={() => setShowStream(true)}
               className="
                 mt-6
                 bg-red-600
@@ -58,6 +59,40 @@ export default function EventPage() {
             </button>
           )}
         </div>
+
+        {showStream && event.stream_url && (
+          <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-6">
+
+            <div className="relative w-full max-w-7xl h-[90vh] bg-black rounded-xl overflow-hidden border border-white/10">
+
+              <button
+                onClick={() => setShowStream(false)}
+                className="
+                  absolute
+          top-4
+          right-4
+          z-10
+          bg-red-600
+          hover:bg-red-500
+          px-4
+          py-2
+          rounded-lg
+          font-bold
+                "
+              >
+                ✕ Close
+              </button>
+
+              <iframe
+                src={event.stream_url}
+                className="w-full h-full"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
+
+            </div>
+          </div>
+        )}
 
         {/* EVENT STATS */}
         <div className="grid md:grid-cols-3 gap-4 mb-10">
