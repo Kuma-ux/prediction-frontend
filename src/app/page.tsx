@@ -411,15 +411,15 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  const featuredMarkets = markets.filter(
+  const featuredMarkets = standaloneMarkets.filter(
     (m: any) => m.featured
   );
 
-  const liveMarkets = markets.filter(
+  const liveMarkets = standaloneMarkets.filter(
     (m: any) => m.is_live
   );
 
-  const normalMarkets = markets.filter(
+  const normalMarkets = standaloneMarkets.filter(
     (m: any) => !m.is_live
   );
 
