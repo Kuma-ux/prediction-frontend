@@ -782,6 +782,7 @@ export default function AdminPage() {
             end_date: editEndDate,
             featured: editFeatured,
             stream_url: editStreamUrl,
+            event_id: editingMarket.event_id,
             options: editOptions,
             bundle_predictions:
               editBundlePredictions
