@@ -80,6 +80,7 @@ export default function AdminPage() {
   const [editSubmissionFeatured, setEditSubmissionFeatured] = useState(false);
   const [editOptions, setEditOptions] = useState<string[]>([]);
   const [newOption, setNewOption] = useState("");
+  const [editEventId, setEditEventId] = useState<number | "">("");
 
   const [loading, setLoading] = useState(true);
   const [description, setDescription] = useState("");
@@ -731,6 +732,8 @@ export default function AdminPage() {
 
     setEditOptions([...(market.options || [])]);
 
+    setEditEventId(market.event_id ?? "");
+
     setEditDescription(
       market.description || ""
     );
@@ -782,7 +785,7 @@ export default function AdminPage() {
             end_date: editEndDate,
             featured: editFeatured,
             stream_url: editStreamUrl,
-            event_id: editingMarket.event_id,
+            event_id: editEventId === "" ? null : editEventId,
             options: editOptions,
             bundle_predictions:
               editBundlePredictions
