@@ -1663,7 +1663,8 @@ export default function AdminPage() {
           flex
           items-center
           justify-center
-          p-6
+          p-4
+          overflow-y-auto
         "
         >
           <div className="
@@ -1674,6 +1675,8 @@ export default function AdminPage() {
             p-6
             w-full
             max-w-2xl
+            max-h-[90vh]
+            overflow-y-auto
           ">
 
             <h2 className="text-3xl font-black mb-6">
