@@ -1624,7 +1624,6 @@ export default function AdminPage() {
                 ))}
             {standaloneMarkets.map(renderMarketCard)}
       </div>
-      </div>
 
       {editingMarket && (
         <div className="
