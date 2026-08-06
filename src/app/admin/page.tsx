@@ -994,10 +994,10 @@ export default function AdminPage() {
                           shrink-0
                           ${
                               market.featured
-                              ?'
+                              ?`
                                 bg-emerald-500
                                 text-black`
-                              :'
+                              :`
                                 border
                                 border-white/10
                                 text-zinc-300
