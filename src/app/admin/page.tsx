@@ -1580,195 +1580,50 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {markets.map((market) => (
-          <div
-            key={market.id}
-            className="
-              border
-              border-white/10
-              rounded-2xl
-              p-6
-              bg-zinc-900
-            "
-          >
-            <div className="flex items-start justify-between gap-4 mb-4">
-
-              <div>
-                <div className="text-2xl font-bold mb-2">
-                  {market.title}
-                </div>
-
-                <div className="text-zinc-400">
-                  Status:
-                  {" "}
-                  {market.shutdown
-                    ? "Shut Down"
-                    : market.resolved
-                    ? `Resolved (${market.outcome})`
-                    : "Active"}
-                </div>
-              </div>
-
-              <button
-                onClick={() => openEditMarket(market)}
-                className="
-                  border
-                  border-blue-500/30
-                  text-blue-300
-                  hover:bg-blue-500/10
-                  transition
-                  px-4
-                  py-2
-                  rounded-xl
-                  text-sm
-                  font-bold
-                "
-              >
-                Edit Market
-              </button>
-
-              <button
-                onClick={() => deleteMarket(market.id)}
-                className="
-                  border
-                  border-red-500/30
-                  text-red-400
-                  hover:bg-red-500/10
-                  transition
-                  px-4
-                  py-2
-                  rounded-xl
-                  text-sm
-                  font-bold
-                "
-              >
-                Delete Market
-              </button>
-
-              <button
-                onClick={() =>
-                  shutdownMarket(market.id)
-                }
-                className="
-                  border
-                  border-yellow-500/30
-                  text-yellow-400
-                  hover:bg-yellow-500/10
-                  transition
-                  px-4
-                  py-2
-                  rounded-xl
-                  text-sm
-                  font-bold
-                "
-              >
-                Shut Down
-              </button>
-
-              <button
-                onClick={() =>
-                  toggleFeatured(
-                    market.id,
-                    !market.featured
-                  )
-                }
-                className={`
-                  px-4
-                  py-2
-                  rounded-xl
-                  text-sm
-                  font-bold
-                  transition
-                  shrink-0
-                  ${
-                    market.featured
-                    ?`
-                     bg-emerald-500
-                     text-black`
-                    :`
-                     border
-                     border-white/10
-                     text-zinc-300
-                     hover:border-emerald-500/40`
-                  }`}
+        {events
+            .filter((event) => marketsByEvent[event.id]?.length > 0)
+            .map((event) => (
+                <div
+                    key={`event-${event.id}`}
+                    className="
+                      border
+                      border-blue-500/20
+                      rounded-2xl
+                      p-6
+                      bg-zinc-950/40
+                    "
                 >
-                  {market.featured
-                    ? "Featured"
-                    : "Add To Slideshow"}
-                </button>
-            </div>
+                    <div className="flex items-center gap-3 mb-5">
+                        <div className="
+                            px-3
+                            py-1
+                            rounded-full
+                            bg-blue-500/10
+                            border
+                            border-blue-500/30
+                            text-blue-400
+                            text-xs
+                            font-bold
+                        ">
+                            EVENT
+                        </div>
 
-            {!market.resolved && !market.shutdown && (
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
-                {market.options?.map((option) => {
+                        <div className="text-xl font-black">
+                            {event.title}
+                        </div>
 
-                  const selected =
-                    selectedOutcomes[market.id]?.includes(option);
-                  
-                  return(
-                  <button
-                    key={option}
-                    onClick={() => {
-                      setSelectedOutcomes(prev => {
-
-                        const current =
-                          prev[market.id] || [];
-
-                        const exists =
-                          current.includes(option);
-
-                        return{
-                          ...prev,
-                          [market.id]: exists
-                          ? current.filter(
-                            o => o !== option
-                          )
-                          : [...current, option]
-                        };
-                      });
-                    }}
-                    className={`
-                      px-5
-                      py-3
-                      rounded-xl
-                      font-bold
-                      transition
-                      ${
-                        selected
-                          ? "bg-emerald-500 text-black"
-                          : "bg-zinc-800 border border-white/10"
-                      }
-                    `}
-                  >
-                    {option}
-                  </button>
-                );
-                })}
-              </div>
-
-              <button
-                onClick={() =>
-                  resolveMarket(
-                    market.id,
-                    selectedOutcomes[market.id] || []
-                  )
-                }
-                className="
-                  w-full
-                  bg-emerald-500
-                  text-black
-                  py-3
-                  rounded-xl
-                  font-bold
-                "
-              >
-                Resolve Market
-              </button>
-            </div>
-            )}
-          </div>
-        ))}
+                        <div className="text-zinc-500 text-sm">
+                            {marketsByEvent[event.id].length} market
+                            {marketsByEvent[event.id].length !== 1 ? "s" : ""}
+                        </div>
+                    </div>
+                    <div className="space-y-4">
+                        {marketsByEvent[event.id].map(renderMarketCard)}
+                    </div>
+                </div>
+                ))}
+            {standaloneMarkets.map(renderMarketCard)}
+      </div>
       </div>
 
       {editingMarket && (
