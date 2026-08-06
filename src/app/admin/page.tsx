@@ -876,6 +876,213 @@ export default function AdminPage() {
     }, 0);
   }
 
+  // GROUP MARKETS BY EVENT
+  const marketsByEvent: Record<number, Market[]> = {};
+  const standaloneMarkets: Market[] = [];
+
+  markets.forEach((market) => {
+      if (market.event_id) {
+          if (!marketsByEvent[market.event_id]) {
+              marketsByEvent[market.event_id] = [];
+          }
+          marketsByEvent[market.event_id].push(market);
+      } else {
+          standaloneMarkets.push(market);
+      }
+  });
+
+  function renderMarketCard(market: Market) {
+      return (
+          <div
+              key={market.id}
+              className="
+                border
+                border-white/10
+                rounded-2xl
+                p-6
+                bg-zinc-900
+              "
+            >
+              <div className="flex items-start justify-between gap-4 mb-4">
+
+                  <div>
+                      <div className="text-2xl font-bold mb-2">
+                          {market.title}
+                      </div>
+
+                      <div className="text-zinc-400">
+                          Status:
+                          {" "}
+                          {market.shutdown
+                              ? "Shut Down"
+                              : market.resolved
+                              ? `Resolved (${market.outcome})`
+                              : "Active"}
+                      </div>
+                  </div>
+
+                  <button
+                      onClick={() => openEditMarket(market)}
+                      className="
+                        border
+                        border-blue-500/30
+                        text-blue-300
+                        hover:bg-blue-500/10
+                        transition
+                        px-4
+                        py-2
+                        rounded-xl
+                        text-sm
+                        font-bold
+                      "
+                  >
+                      Edit Market
+                  </button>
+
+                  <button
+                      onClick={() => deleteMarket(market.id)}
+                      className="
+                        border
+                        border-red-500/30
+                        text-red-400
+                        hover:bg-red-500/10
+                        transition
+                        px-4
+                        py-2
+                        rounded-xl
+                        text-sm
+                        font-bold
+                      "
+                   >
+                      Delete Market
+                    </button>
+
+                   <button
+                       onClick={() =>
+                           shutdownMarket(market.id)
+                       }
+                       className="
+                         border
+                         border-yellow-500/30
+                         text-yellow-400
+                         hover:bg-yellow-500/10
+                         transition
+                         px-4
+                         py-2
+                         rounded-xl
+                         text-sm
+                         font-bold
+                       "
+                    >
+                       Shut Down
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            toggleFeatured(
+                                market.id,
+                                !market.featured
+                            )
+                        }
+                        className={`
+                          px-4
+                          py-2
+                          rounded-xl
+                          text-sm
+                          font-bold
+                          transition
+                          shrink-0
+                          ${
+                              market.featured
+                              ?'
+                                bg-emerald-500
+                                text-black`
+                              :'
+                                border
+                                border-white/10
+                                text-zinc-300
+                                hover:border-emerald-500/40`
+                          }`}
+                        >
+                          {market.featured
+                            ? "Featured"
+                            : "Add To Slideshow"}
+                        </button>
+                    </div>
+
+                    {!market.resolved && !market.shutdown && (
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-3">
+                        {market.options?.map((option) => {
+
+                          const selected =
+                            selectedOutcomes[market.id]?.includes(option);
+
+                          return(
+                          <button
+                            key={option}
+                            onClick={() => {
+                              setSelectedOutcomes(prev => {
+
+                                const current =
+                                  prev[market.id] || [];
+
+                                const exists =
+                                  current.includes(option);
+
+                                return{
+                                  ...prev,
+                                  [market.id]: exists
+                                  ? current.filter(
+                                    o => o !== option
+                                  )
+                                  : [...current, option]
+                                };
+                             });
+                            }}
+                            className={`
+                              px-5
+                              py-3
+                              rounded-xl
+                              font-bold
+                              transition
+                              ${
+                                  selected
+                                  ? "bg-emerald-500 text-black"
+                                  : "bg-zinc-800 border border-white/10"
+                              }
+                            `}
+                          >
+                              {option}
+                          </button>
+                        );
+                    })}
+                      </div>
+
+                      <button
+                          onClick={() =>
+                              resolveMarket(
+                                  market.id,
+                                  selectedOutcomes[market.id] || []
+                              )
+                          }
+                          className="
+                            w-full
+                            bg-emerald-500
+                            text-black
+                            py-3
+                            rounded-xl
+                            font-bold
+                          "
+                        >
+                          Resolve Market
+                        </button>
+                    </div>
+                  )}
+            </div>
+         );
+  }
+
   return (
     <main className="min-h-screen bg-black text-white p-10">
       <h1 className="text-5xl font-black mb-10">Admin Dashboard</h1>
