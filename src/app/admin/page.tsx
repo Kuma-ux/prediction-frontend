@@ -78,6 +78,8 @@ export default function AdminPage() {
   const [editSubmissionBundlePredictions, setEditSubmissionBundlePredictions] = useState("");
   const [editSubmissionB, setEditSubmissionB] = useState("50");
   const [editSubmissionFeatured, setEditSubmissionFeatured] = useState(false);
+  const [editOptions, setEditOptions] = useState<string[]>([]);
+  const [newOption, setNewOption] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [description, setDescription] = useState("");
@@ -727,6 +729,8 @@ export default function AdminPage() {
 
     setEditRules(market.rules || "");
 
+    setEditOptions([...(market.options || [])]);
+
     setEditDescription(
       market.description || ""
     );
@@ -778,6 +782,7 @@ export default function AdminPage() {
             end_date: editEndDate,
             featured: editFeatured,
             stream_url: editStreamUrl,
+            options: editOptions,
             bundle_predictions:
               editBundlePredictions
                 .split("\n")
@@ -804,6 +809,30 @@ export default function AdminPage() {
 
       alert("Failed to update market");
     }
+  }
+
+  function updateOption(index: number, value: string) {
+      setEditOptions(prev => {
+          const copy = [...prev];
+          copy[index] = value;
+          return copy;
+      });
+  }
+
+  function removeOption(index: number) {
+      setEditOptions(prev => prev.filter((_, i) => i !== index));
+  }
+
+  function addOption() {
+      if (!newOption.trim()) return;
+
+      if (editOptions.includes(newOption.trim())) {
+          alert("Option already exists.");
+          return;
+      }
+
+      setEditOptions(prev => [...prev, newOption.trim()]);
+      setNewOption("");
   }
 
   async function resolveMarket(marketId: number, outcomes: string[]) {
@@ -1738,6 +1767,165 @@ export default function AdminPage() {
                 Featured in slideshow
               </div>
             </div>
+
+            {editingMarket.market_type !== "bundle" && (
+              <div className="mb-5">
+
+                  <div className="font-bold mb-3">
+                      Market Options
+                  </div>
+
+                  <div className="space-y-2">
+
+                      {editOptions.map((option, index) => (
+
+                        <div
+                            key={index}
+                            className="flex gap-2"
+                        >
+                            <input
+                                value={option}
+                                onChange={(e) =>
+                                    updateOption(index, e.target.value)
+                                }
+                                className="
+                                  flex-1
+                                  bg-black
+                                  border
+                                  border-white/10
+                                  rounded
+                                  p-3
+                                "
+                            />
+
+                            <button
+                                onClick={() => removeOption(index)}
+                                className="
+                                  px-4
+                                  rounded
+                                  bg-red-600
+                                  hover:bg-red-500
+                                "
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-2 mt-3">
+
+                      <input
+                          value={newOption}
+                          onChange={(e) =>
+                              setNewOption(e.target.value)
+                          }
+                          placeholder="New option..."
+                          className="
+                            flex-1
+                            bg-black
+                            border
+                            border-white/10
+                            rounded
+                            p-3
+                          "
+                     />
+
+                      <button
+                          onClick={addOption}
+                          className="
+                            px-5
+                            bg-emerald-500
+                            text-black
+                            rounded
+                            font-bold
+                          "
+                      >
+                          Add
+                      </button>
+                  </div>
+
+              </div>
+            )}
+
+            {!editingMarket.resolved && !editingMarket.shutdown && (
+
+            <div className="mt-8">
+
+                <h3 className="text-xl font-bold mb-4">
+                    Resolve Market
+                </h3>
+
+                <div className="grid grid-cols-2 gap-3">
+
+                    {editingMarket.options.map(option => {
+
+                      const selected =
+                          selectedOutcomes[editingMarket.id]?.includes(option);
+
+                      return (
+                          <button
+                              key={option}
+                              onClick={() => {
+
+                                  setSelectedOutcomes(prev => {
+
+                                      const current =
+                                          prev[editingMarket.id] || [];
+
+                                      const exists =
+                                          current.includes(option);
+
+                                      return {
+
+                                          ...prev,
+
+                                          [editingMarket.id]: exists
+                                              ? current.filter(o => o !== option)
+                                              : [...current, option]
+
+                                      };
+
+                                  });
+                              }}
+                              className={`
+                                py-3
+                                rounded-xl
+                                font-bold
+                                ${
+                                    selected
+                                      ? "bg-emerald-500 text-black"
+                                      : "bg-zinc-900 border border-white/10"
+                                }
+                              `}
+                            >
+                              {option}
+                          </button>
+                        );
+                    })}
+                </div>
+
+                <button
+                    onClick={() =>
+                        resolveMarket(
+                            editingMarket.id,
+                            selectedOutcomes[editingMarket.id] || []
+                        )
+                    }
+                    className="
+                      mt-4
+                      w-full
+                      bg-emerald-500
+                      text-black
+                      py-3
+                      rounded-xl
+                      font-bold
+                    "
+                >
+                    Resolve Market
+                </button>
+            </div>
+            )}
 
             <div className="flex gap-3">
               <button
