@@ -462,6 +462,35 @@ export default function HomePage() {
     });
   }
 
+  function formatDatabaseDateTime(value?: string | null) {
+    if (!value) return "Multiple dates";
+
+    const match = value.match(
+      /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2})(?::(\d{2}))?/
+    );
+
+    if (!match) return value;
+
+    const [, year, month, day, hour, minute] = match;
+
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+
+    return date.toLocaleString("en-KE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  }
+
   const [showProfileHint, setShowProfileHint] = useState(false);
 
   useEffect(() => {
@@ -857,7 +886,7 @@ export default function HomePage() {
 
                         <div className="text-zinc-500 text-sm flex items-center gap-1">
                           <Clock3 size={14} />
-                          {new Date(market.end_date).toLocaleDateString()}
+                          {formatDatabaseDateTime(market.end_date)}
                         </div>
                       </div>
 
@@ -1119,7 +1148,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="text-xs text-zinc-500">
-                    {new Date(market.end_date).toLocaleTimeString()}
+                    {formatDatabaseDateTime(market.end_date)}
                   </div>
                 </div>
 
@@ -1413,9 +1442,7 @@ export default function HomePage() {
 
                 <div className="flex text-[11px] text-zinc-500 items-center gap-1 whitespace-nowrap">
                   <Clock3 size={11} />
-                  {item.end_date
-  ? new Date(item.end_date).toLocaleDateString()
-  : "Multiple markets"}
+                  {formatDatabaseDateTime(item.end_date)}
                 </div>
               </div>
 
@@ -1438,9 +1465,7 @@ export default function HomePage() {
                     
                     Resolves:
                     {" "}
-                    {item.end_date
-  ? new Date(item.end_date).toLocaleTimeString()
-  : "--"}
+                    {formatDatabaseDateTime(item.end_date)}
                   </div>
                 )}
 
