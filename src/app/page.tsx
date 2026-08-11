@@ -672,8 +672,102 @@ export default function HomePage() {
                 `}
               >
 
-                {/* YOUR EXISTING PROFILE MENU CONTENT GOES HERE */}
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push(`/profile/${user.username}`);
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  <div className="font-bold">@{user.username}</div>
+                    <div className="text-zinc-500 text-sm">View Profile</div>
+                </button>
 
+                <div className="border-t border-white/10" />
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/settings");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  Settings
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/how-it-works");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  How It Works
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/news");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  News & Analysis
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/create-your-own-market");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  Create Your Own Market
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/creator-dashboard");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  Creator Dashboard
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/help");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  Help Center
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    router.push("/terms");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5"
+                >
+                  Terms & Conditions
+                </button>
+
+                <button
+                  onClick={async () => {
+                    await fetch("https://api.theprobability.site/auth/logout", {
+                      method: "POST",
+                      credentials: "include",
+                    });
+                    setProfileMenuOpen(false);
+                    router.push("/login");
+                  }}
+                  className="w-full text-left p-4 hover:bg-white/5 text-red-500"
+                >
+                  Logout
+                </button>
               </div>
             </div>
           ) : (
