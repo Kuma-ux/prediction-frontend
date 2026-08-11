@@ -1,4 +1,3 @@
-```tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -7,85 +6,12 @@ import { useRouter } from 'next/navigation';
 export default function MarketsPage() {
   const [markets, setMarkets] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] =
-    useState("Trending");
+  const [selectedCategory, setSelectedCategory] = useState("Trending");
 
   const router = useRouter();
 
-  /*
-   * PostgreSQL:
-   *
-   * timestamp without time zone
-   *
-   * Example:
-   * 2026-08-20 21:00:00
-   *
-   * We intentionally treat this as a local wall-clock time.
-   *
-   * DO NOT use:
-   * new Date(date)
-   *
-   * because JavaScript/browser timezone parsing can cause
-   * the displayed time to shift.
-   */
-  function formatDatabaseDate(dateValue: any) {
-    if (!dateValue) return "Multiple markets";
-
-    const value = String(dateValue).trim();
-
-    /*
-     * Extract the database timestamp directly.
-     *
-     * Handles:
-     * 2026-08-20 21:00:00
-     * 2026-08-20T21:00:00
-     * 2026-08-20 21:00:00.000
-     */
-    const match = value.match(
-      /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2})(?::(\d{2}))?/
-    );
-
-    if (!match) {
-      return value;
-    }
-
-    const [
-      ,
-      year,
-      month,
-      day,
-      hour,
-      minute,
-      second = "0"
-    ] = match;
-
-    /*
-     * Construct the date using the user's local timezone
-     * WITHOUT allowing the database timestamp to be
-     * interpreted as UTC.
-     */
-    const localDate = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute),
-      Number(second)
-    );
-
-    if (Number.isNaN(localDate.getTime())) {
-      return value;
-    }
-
-    return localDate.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  }
-
-  async function loadMarkets() {
-    try {
+  useEffect(() => {
+    async function loadMarkets() {
       const res = await fetch(
         "https://api.theprobability.site/markets",
         {
@@ -96,18 +22,11 @@ export default function MarketsPage() {
       const data = await res.json();
 
       if (data.success) {
-        setMarkets(
-          data.standaloneMarkets ?? data.markets ?? []
-        );
-
+        setMarkets(data.standaloneMarkets ?? data.markets);
         setEvents(data.events ?? []);
       }
-    } catch (err) {
-      console.error("Failed to load markets:", err);
     }
-  }
 
-  useEffect(() => {
     loadMarkets();
   }, []);
 
@@ -128,8 +47,7 @@ export default function MarketsPage() {
     selectedCategory === "Trending"
       ? [...events, ...markets].sort(
           (a: any, b: any) =>
-            (b.totalvolume || 0) -
-            (a.totalvolume || 0)
+            (b.totalvolume || 0) - (a.totalvolume || 0)
         )
       : [...events, ...markets].filter(
           (item: any) =>
@@ -140,7 +58,6 @@ export default function MarketsPage() {
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="max-w-7xl mx-auto px-6 py-12">
-
         <h1 className="text-5xl font-black mb-3">
           All Markets
         </h1>
@@ -150,14 +67,11 @@ export default function MarketsPage() {
         </p>
 
         {/* CATEGORY FILTERS */}
-
         <div className="flex flex-wrap gap-3 mb-6">
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() =>
-                setSelectedCategory(category)
-              }
+              onClick={() => setSelectedCategory(category)}
               className={`
                 px-4
                 py-2
@@ -189,17 +103,13 @@ export default function MarketsPage() {
         </div>
 
         {/* MARKET COUNT */}
-
         <div className="mb-8 text-zinc-500 text-sm">
           Showing {filteredItems.length} items
-          {selectedCategory !== "Trending" &&
-            ` in ${selectedCategory}`}
+          {selectedCategory !== "Trending" && ` in ${selectedCategory}`}
         </div>
 
         {/* MARKETS GRID */}
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-
           {filteredItems.map((item: any) => {
             const isEvent = "markets" in item;
 
@@ -208,9 +118,7 @@ export default function MarketsPage() {
                 key={item.id}
                 onClick={() =>
                   router.push(
-                    isEvent
-                      ? `/event/${item.id}`
-                      : `/market/${item.id}`
+                    isEvent ? `/event/${item.id}` : `/market/${item.id}`
                   )
                 }
                 className="
@@ -226,53 +134,46 @@ export default function MarketsPage() {
                   duration-200
                 "
               >
-
                 <div className="flex items-start justify-between mb-3">
-
                   <div>
                     <div className="text-emerald-400 text-sm">
                       {item.category}
                     </div>
 
                     {isEvent && (
-                      <div
-                        className="
-                          mt-2
-                          inline-flex
-                          px-2
-                          py-1
-                          rounded-full
-                          bg-blue-500/10
-                          border
-                          border-blue-500/30
-                          text-blue-400
-                          text-[10px]
-                          font-bold
-                        "
-                      >
+                      <div className="
+                        mt-2
+                        inline-flex
+                        px-2
+                        py-1
+                        rounded-full
+                        bg-blue-500/10
+                        border
+                        border-blue-500/30
+                        text-blue-400
+                        text-[10px]
+                        font-bold
+                      ">
                         EVENT • {item.markets.length} markets
                       </div>
                     )}
                   </div>
 
                   {item.is_live && (
-                    <div
-                      className="
-                        px-2
-                        py-1
-                        rounded-full
-                        bg-red-500/15
-                        border
-                        border-red-500/30
-                        text-red-400
-                        text-[10px]
-                        font-bold
-                      "
-                    >
+                    <div className="
+                      px-2
+                      py-1
+                      rounded-full
+                      bg-red-500/15
+                      border
+                      border-red-500/30
+                      text-red-400
+                      text-[10px]
+                      font-bold
+                    ">
                       LIVE
                     </div>
                   )}
-
                 </div>
 
                 <h3 className="font-bold text-lg mb-3 line-clamp-2">
@@ -284,7 +185,6 @@ export default function MarketsPage() {
                 </p>
 
                 <div className="flex items-center justify-between pt-4 border-t border-white/5">
-
                   <div>
                     <div className="text-zinc-500 text-xs uppercase">
                       Volume
@@ -295,34 +195,27 @@ export default function MarketsPage() {
                     </div>
                   </div>
 
-                  <div className="text-zinc-500 text-xs text-right">
+                  <div className="text-zinc-500 text-xs">
                     {item.end_date
-                      ? formatDatabaseDate(item.end_date)
+                      ? new Date(item.end_date).toLocaleDateString()
                       : "Multiple markets"}
                   </div>
-
                 </div>
-
               </div>
             );
           })}
-
         </div>
 
         {filteredItems.length === 0 && (
-          <div
-            className="
-              text-center
-              py-20
-              text-zinc-500
-            "
-          >
+          <div className="
+            text-center
+            py-20
+            text-zinc-500
+          ">
             No markets found in this category.
           </div>
         )}
-
       </div>
     </main>
   );
 }
-```
