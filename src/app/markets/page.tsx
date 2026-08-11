@@ -10,6 +10,35 @@ export default function MarketsPage() {
 
   const router = useRouter();
 
+  function formatDatabaseDateTime(value?: string | null) {
+    if (!value) return "Multiple dates";
+
+    const match = value.match(
+      /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2})(?::(\d{2}))?/
+    );
+
+    if (!match) return value;
+
+    const [, year, month, day, hour, minute] = match;
+
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+
+    return date.toLocaleString("en-KE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  }
+
   useEffect(() => {
     async function loadMarkets() {
       const res = await fetch(
@@ -196,9 +225,7 @@ export default function MarketsPage() {
                   </div>
 
                   <div className="text-zinc-500 text-xs">
-                    {item.end_date
-                      ? new Date(item.end_date).toLocaleDateString()
-                      : "Multiple markets"}
+                    {formatDatabaseDateTime(item.end_date)}
                   </div>
                 </div>
               </div>
