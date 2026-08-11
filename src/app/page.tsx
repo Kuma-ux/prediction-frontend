@@ -541,500 +541,245 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-black text-white overflow-hidden">
-      {/* FEATURED MARKET SLIDESHOW */}
-      <section className="relative border-b border-white/10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,150,0.12),transparent_55%)]" />
+      ```tsx
+{/* FEATURED MARKET SLIDESHOW */}
+<section className="relative border-b border-white/10 overflow-hidden">
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,150,0.12),transparent_55%)]" />
 
-        <div className="max-w-7xl mx-auto px-4 py-10 relative z-10">
+  <div className="max-w-7xl mx-auto px-4 py-10 relative z-10">
 
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <div className="text-emerald-400 text-sm font-semibold uppercase tracking-[0.2em]">
-                Featured Markets
-              </div>
+    {/* HEADER */}
+    <div className="mb-6">
 
-              <h1 className="text-4xl md:text-5xl font-black mt-2">
-                Trade live probabilities
-              </h1>
-            </div>
+      {/* TITLE */}
+      <div>
+        <div className="text-emerald-400 text-sm font-semibold uppercase tracking-[0.2em]">
+          Featured Markets
+        </div>
 
-            <div className="hidden md:flex items-center gap-2 text-zinc-500 text-sm">
-              <Activity size={16} />
-              Real-time market sentiment
-            </div>
+        <h1 className="text-4xl md:text-5xl font-black mt-2">
+          Trade live probabilities
+        </h1>
+      </div>
 
-            <div className="flex items-center gap-2 ml-auto">
-              <a
-                href="https://news.theprobability.site/news/blog/how-to-use-theprobability-predict-and-win-on-literally-anything"
-                className="
-                  px-5
-                  py-2
-                  rounded-xl
-                  border
-                  border-white/10
-                  bg-zinc-900
-                  hover:bg-zinc-800
-                  transition
-                "
-              >
-                How It Works
-              </a>
+      {/* ACTIONS BELOW TITLE */}
+      <div className="flex items-center justify-between mt-5">
 
-            {user ? (
-              <div className="relative group">
+        {/* REAL-TIME SENTIMENT */}
+        <div className="hidden md:flex items-center gap-2 text-zinc-500 text-sm">
+          <Activity size={16} />
+          Real-time market sentiment
+        </div>
 
-                {showProfileHint && (
+        {/* HOW IT WORKS + AUTH */}
+        <div className="flex items-center gap-2 ml-auto">
+
+          {/* HOW IT WORKS */}
+          <a
+            href="https://news.theprobability.site/news/blog/how-to-use-theprobability-predict-and-win-on-literally-anything"
+            className="
+              px-5
+              py-2
+              rounded-xl
+              border
+              border-white/10
+              bg-zinc-900
+              hover:bg-zinc-800
+              transition
+            "
+          >
+            How It Works
+          </a>
+
+          {user ? (
+            <div className="relative group">
+
+              {showProfileHint && (
+                <div
+                  className="
+                    absolute
+                    top-full
+                    right-0
+                    mb-3
+                    w-64
+                    rounded-xl
+                    bg-zinc-950
+                    border border-emerald-500/30
+                    shadow-xl
+                    shadow-emerald-500/10
+                    px-4
+                    py-3
+                    animate-bounce
+                    z-[100]
+                  "
+                >
+                  <p className="text-sm text-white font-medium">
+                    👋 Click here to access your profile, settings,
+                    creator dashboard and more.
+                  </p>
+
                   <div
                     className="
                       absolute
-                      top-full
-                      right-0
-                      mb-3
-                      w-64
-                      rounded-xl
-                      bg-zinc-950
-                      border border-emerald-500/30
-                      shadow-xl
-                      shadow-emerald-500/10
-                      px-4
-                      py-3
-                      animate-bounce
-                      z-100
+                      -top-4
+                      right-6
+                      border-8
+                      border-transparent
+                      border-b-zinc-950
                     "
-                  >
-                    <p className="text-sm text-white font-medium">
-                      👋 Click here to access your profile, settings,
-                      creator dashboard and more.
-                    </p>
-
-                    <div
-                      className="
-                        absolute
-                        -top-4
-                        right-6
-                        border-8
-                        border-transparent
-                        border-t-zinc-950
-                      "
-                    />
-                  </div>
-                )}
-
-                <button
-                  onClick={() => setProfileMenuOpen((prev) => !prev)}
-                  className="
-                    flex items-center gap-3
-                    bg-zinc-900
-                    hover:bg-zinc-800
-                    px-4 py-2
-                    rounded-xl
-                    border border-white/10
-                    transition
-                  "
-                >
-
-                  <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-black font-bold">
-                    {user.username?.charAt(0).toUpperCase()}
-                  </div>
-
-                  <span>@{user.username}</span>
-                </button>
-
-                <div
-                  className={`
-                    absolute
-                    right-0
-                    top-full
-                    mt-2
-                    w-64
-                    bg-zinc-950
-                    border
-                    border-white/10
-                    rounded-2xl
-                    transition-all
-                    z-50
-                    overflow-hidden
-                    ${
-                      profileMenuOpen
-                        ? "opacity-100 visible"
-                        : "opacity-0 invisible group-hover:opacity-100 group-hover:visible"
-                     }
-                  `}
-                >
-
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      router.push(`/profile/${user.username}`);
-                    }}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-
-                    <div className="font-bold">
-                      @{user.username}
-                    </div>
-
-                    <div className="text-zinc-500 text-sm">
-                      View Profile
-                    </div>
-                  </button>
-
-                  <div className="border-t border-white/10" />
-
-                  <button
-                    onClick={() => { setProfileMenuOpen(false); router.push("/settings");}}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-
-                    Settings
-                  </button>
-
-                  <button
-                    onClick={() => { setProfileMenuOpen(false); router.push("/how-it-works"); }}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-                    How It Works
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      router.push("/news");
-                    }}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-                    News & Analysis
-                  </button>
-
-                  <button
-                    onClick={() =>{
-                      setProfileMenuOpen(false);
-                      router.push("/create-your-own-market");
-                    }}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-                    Create Your Own Market
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      router.push("/creator-dashboard");
-                    }}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-                    Creator Dashboard
-                  </button>
-
-                  <button
-                    onClick={() => { setProfileMenuOpen(false); router.push("/help");}}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                      "
-                    >
-                      Help Center
-                  </button>
-
-                  <button
-                    onClick={() => { setProfileMenuOpen(false); router.push("/terms");}}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                    "
-                  >
-                    Terms & Conditions
-                  </button>
-
-                  <button
-                    onClick={async () => {
-                      await fetch(
-                        "https://api.theprobability.site/auth/logout",
-                        {
-                          method: "POST",
-                          credentials: "include",
-                        }
-                      );
-                      setProfileMenuOpen(false);
-
-                      router.push("/login");
-                    }}
-                    className="
-                      w-full
-                      text-left
-                      p-4
-                      hover:bg-white/5
-                      text-red-500
-                    "
-                  >
-                    Logout
-                  </button>
-                </div>
-              </div>
-            ) : (
-
-                <button
-                  onClick={() => router.push("/register")}
-                  className="
-                    px-5
-                    py-2
-                    rounded-xl
-                    border
-                    border-white/10
-                    bg-zinc-900
-                    hover:bg-zinc-800
-                    transition
-                  "
-                >
-                  Sign In
-                </button>
-            )}
-            </div>
-          </div>
-
-          <div className="relative h-[420px] md:h-[460px]">
-
-            {featuredMarkets.map((market, index) => {
-
-              const isActive = index === activeSlide;
-
-              return (
-                <motion.div
-                  key={market.id}
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: isActive ? 1 : 0,
-                    scale: isActive ? 1 : 0.96,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                  }}
-                  className={`
-                    absolute
-                    inset-0
-                    rounded-3xl
-                    border
-                    border-white/10
-                    bg-gradient-to-br
-                    from-zinc-900
-                    to-black
-                    p-6
-                    flex
-                    flex-col
-                    justify-between
-                    overflow-hidden
-                    ${
-                      isActive
-                        ? "pointer-events-auto z-20"
-                        : "pointer-events-none z-0"
-                    }`}
-                  >
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,255,150,0.12),transparent_40%)]" />
-
-                    <div className="relative z-10">
-
-                      <div className="flex items-center justify-between mb-6">
-
-                        <div className="flex items-center gap-2">
-
-                          <div className="
-                            px-3
-                            py-1
-                            rounded-full
-                            bg-emerald-500/10
-                            border
-                            border-emerald-500/20
-                            text-emerald-300
-                            text-xs
-                            font-semibold
-                          ">
-                            {market.category}
-                          </div>
-
-                          {market.market_type === "bundle" && (
-                            <div className="
-                              px-3
-                              py-1
-                              rounded-full
-                              bg-purple-500/10
-                              border
-                              border-purple-500/20
-                              text-purple-300
-                              text-xs
-                              font-semibold
-                            ">
-                              Bundle
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="text-zinc-500 text-sm flex items-center gap-1">
-                          <Clock3 size={14} />
-                          {formatDatabaseDateTime(market.end_date)}
-                        </div>
-                      </div>
-
-                      <h2 className="
-                        text-2xl
-                        md:text-5xl
-                        font-black
-                        leading-tight
-                        max-w-4xl
-                      ">
-                        {market.title}
-                      </h2>
-
-                      <p className="
-                        mt-4
-                        text-zinc-400
-                        text-sm
-                        md:text-lg
-                        leading-relaxed
-                        max-w-3xl
-                      ">
-                        {market.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-3 mt-8">
-
-                        {market.options?.slice(0, 3).map((option: string) => (
-                          <div
-                            key={option}
-                            className="
-                              bg-black/40
-                              border
-                              border-white/10
-                              rounded-2xl
-                              px-4
-                              py-3
-                              min-w-[120px]
-                            "
-                          >
-                            <div className="text-zinc-500 text-xs mb-1">
-                              {option}
-                            </div>
-
-                            <div className="text-xl font-black text-emerald-400">
-                              {((market.odds?.[option] ?? 0) * 100).toFixed(0)}%
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="
-                      relative
-                      z-10
-                      mt-8
-                      flex
-                      items-center
-                      justify-between
-                    ">
-                      <div>
-                        <div className="text-zinc-500 text-xs uppercase">
-                          Volume
-                        </div>
-
-                        <div className="text-2xl font-black">
-                          KES{market.totalvolume}
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={() =>
-                          document
-                            .getElementById(`market-${market.id}`)
-                            ?.scrollIntoView({
-                              behavior: "smooth",
-                              block: "center",
-                            })
-                        }
-                        className="
-                          bg-emerald-500
-                          hover:bg-emerald-400
-                          transition
-                          text-black
-                          font-bold
-                          px-6
-                          py-3
-                          rounded-2xl
-                          flex
-                          items-center
-                          gap-2
-                        "
-                      >
-                        Trade Market
-                        <ArrowUpRight size={18} />
-                      </button>
-                    </div>
-                  </motion.div>
-              );
-            })}
-
-            {/* DOTS */}
-            <div className="
-              absolute
-              bottom-4
-              left-1/2
-              -translate-x-1/2
-              flex
-              gap-2
-              z-30
-            ">
-              {featuredMarkets.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveSlide(index)}
-                  className={`
-                    w-3
-                    h-3
-                    rounded-full
-                    transition
-                    ${
-                      activeSlide === index
-                        ? "bg-emerald-400"
-                        : "bg-white/20"
-                    }`}
                   />
-              ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => setProfileMenuOpen((prev) => !prev)}
+                className="
+                  flex items-center gap-3
+                  bg-zinc-900
+                  hover:bg-zinc-800
+                  px-4 py-2
+                  rounded-xl
+                  border border-white/10
+                  transition
+                "
+              >
+                <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-black font-bold">
+                  {user.username?.charAt(0).toUpperCase()}
+                </div>
+
+                <span>@{user.username}</span>
+              </button>
+
+              {/* PROFILE DROPDOWN */}
+              <div
+                className={`
+                  absolute
+                  right-0
+                  top-full
+                  mt-2
+                  w-64
+                  bg-zinc-950
+                  border
+                  border-white/10
+                  rounded-2xl
+                  transition-all
+                  z-50
+                  overflow-hidden
+                  ${
+                    profileMenuOpen
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible group-hover:opacity-100 group-hover:visible"
+                  }
+                `}
+              >
+
+                {/* YOUR EXISTING PROFILE MENU CONTENT GOES HERE */}
+
+              </div>
             </div>
-          </div>
+          ) : (
+            <button
+              onClick={() => router.push("/register")}
+              className="
+                px-5
+                py-2
+                rounded-xl
+                border
+                border-white/10
+                bg-zinc-900
+                hover:bg-zinc-800
+                transition
+              "
+            >
+              Sign In
+            </button>
+          )}
+
         </div>
-      </section>
+      </div>
+    </div>
+
+    {/* FEATURED MARKETS */}
+    <div className="relative h-[420px] md:h-[460px]">
+
+      {featuredMarkets.map((market, index) => {
+
+        const isActive = index === activeSlide;
+
+        return (
+          <motion.div
+            key={market.id}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: isActive ? 1 : 0,
+              scale: isActive ? 1 : 0.96,
+            }}
+            transition={{
+              duration: 0.6,
+            }}
+            className={`
+              absolute
+              inset-0
+              rounded-3xl
+              border
+              border-white/10
+              bg-gradient-to-br
+              from-zinc-900
+              to-black
+              p-6
+              flex
+              flex-col
+              justify-between
+              overflow-hidden
+              ${
+                isActive
+                  ? "pointer-events-auto z-20"
+                  : "pointer-events-none z-0"
+              }
+            `}
+          >
+
+            {/* KEEP YOUR EXISTING MARKET CARD CONTENT HERE */}
+
+          </motion.div>
+        );
+      })}
+
+      {/* DOTS */}
+      <div
+        className="
+          absolute
+          bottom-4
+          left-1/2
+          -translate-x-1/2
+          flex
+          gap-2
+          z-30
+        "
+      >
+        {featuredMarkets.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveSlide(index)}
+            className={`
+              w-3
+              h-3
+              rounded-full
+              transition
+              ${
+                activeSlide === index
+                  ? "bg-emerald-400"
+                  : "bg-white/20"
+              }
+            `}
+          />
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
       {/* LIVE MARKETS ROW */}
       <section className="border-b border-white/10 bg-zinc-950/40">
