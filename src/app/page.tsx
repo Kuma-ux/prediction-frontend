@@ -541,7 +541,6 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-black text-white overflow-hidden">
-      ```tsx
 {/* FEATURED MARKET SLIDESHOW */}
 <section className="relative border-b border-white/10 overflow-hidden">
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,150,0.12),transparent_55%)]" />
@@ -739,8 +738,78 @@ export default function HomePage() {
             `}
           >
 
-            {/* KEEP YOUR EXISTING MARKET CARD CONTENT HERE */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,255,150,0.12),transparent_40%)]" />
 
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-2">
+                  <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
+                    {market.category}
+                  </div>
+
+                  {market.market_type === "bundle" && (
+                    <div className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
+                      Bundle
+                    </div>
+                  )}
+                </div>
+                <div className="text-zinc-500 text-sm flex items-center gap-1">
+                  <Clock3 size={14} />
+                  {formatDatabaseDateTime(market.end_date)}
+                </div>
+              </div>
+
+              <h2 className="text-2xl md:text-5xl font-black leading-tight max-w-4xl">
+                {market.title}
+              </h2>
+
+              <p className="mt-4 text-zinc-400 text-sm md:text-lg leading-relaxed max-w-3xl">
+                {market.description}
+              </p>
+
+              <div className="flex flex-wrap gap-3 mt-8">
+                {market.options?.slice(0, 3).map((option: string) => (
+                  <div
+                    key={option}
+                    className="bg-black/40 border border-white/10 rounded-2xl px-4 py-3 min-w-[120px]"
+                  >
+                    <div className="text-zinc-500 text-xs mb-1">
+                      {option}
+                    </div>
+                    <div className="text-xl font-black text-emerald-400">
+                      {((market.odds?.[option] ?? 0) * 100).toFixed(0)}%
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-8 flex items-center justify-between">
+              <div>
+                <div className="text-zinc-500 text-xs uppercase">
+                  Volume
+                </div>
+
+                <div className="text-2xl font-black">
+                  KES{market.totalvolume}
+                </div>
+              </div>
+
+              <button
+                onClick={() =>
+                  document
+                    .getElementById(`market-${market.id}`)
+                    ?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "center",
+                    })
+                }
+                className="bg-emerald-500 hover:bg-emerald-400 transition text-black font-bold px-6 py-3 rounded-2xl flex items-center gap-2"
+              >
+                Trade Market
+                <ArrowUpRight size={18} />
+              </button>
+            </div>
           </motion.div>
         );
       })}
