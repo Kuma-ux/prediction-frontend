@@ -823,6 +823,7 @@ export default function HomePage() {
                   Sign In
                 </button>
             )}
+            </div>
           </div>
 
           <div className="relative h-[420px] md:h-[460px]">
