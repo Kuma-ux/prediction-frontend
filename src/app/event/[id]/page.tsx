@@ -40,6 +40,35 @@ export default function EventPage() {
     }
   }
 
+  function formatDatabaseDateTime(value?: string | null) {
+    if (!value) return "Multiple dates";
+
+    const match = value.match(
+      /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2})(?::(\d{2}))?/
+    );
+
+    if (!match) return value;
+
+    const [, year, month, day, hour, minute] = match;
+
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+
+    return date.toLocaleString("en-KE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  }
+
   if (!event) {
     return (
       <main className="min-h-screen bg-black flex items-center justify-center text-emerald-400">
@@ -136,9 +165,7 @@ export default function EventPage() {
           <div className="bg-zinc-950 rounded-xl border border-white/10 p-5">
             <div className="text-zinc-500 text-sm">Resolves</div>
             <div className="font-bold">
-              {event.end_date
-                ? new Date(event.end_date).toLocaleDateString()
-                : "Multiple dates"}
+              {formatDatabaseDateTime(event.end_date)}
             </div>
           </div>
         </div>
