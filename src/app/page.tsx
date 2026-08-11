@@ -563,7 +563,7 @@ export default function HomePage() {
               Real-time market sentiment
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ml-auto">
               <a
                 href="https://news.theprobability.site/news/blog/how-to-use-theprobability-predict-and-win-on-literally-anything"
                 className="
