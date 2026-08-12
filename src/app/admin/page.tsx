@@ -88,6 +88,7 @@ export default function AdminPage() {
   const [markets, setMarkets] = useState<Market[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [eventId, setEventId] = useState<number | "">("");
+  const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
   const [eventTitle, setEventTitle] = useState("");
   const [eventCategory, setEventCategory] = useState("");
   const [eventDescription, setEventDescription] = useState("");
@@ -212,6 +213,23 @@ export default function AdminPage() {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  function toggleEventSelection(eventId: number) {
+      setSelectedEventIds(prev => {
+          if (prev.includes(eventId)) {
+              return prev.filter(id => id !== eventId);
+          }
+          return [...prev, eventId];
+      });
+  }
+
+  function selectAllEvents() {
+      setSelectedEventIds(events.map(event => event.id));
+  }
+
+  function clearSelectedEvents() {
+      setSelectedEventIds([]);
   }
     
   async function createEvent() {
@@ -366,39 +384,75 @@ export default function AdminPage() {
 
       setCreating(true);
 
-      const res = await fetch(
-        "https://api.theprobability.site/admin/create-market",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            title,
-            description,
-            rules,
-            category,
-            b: Number(b),
-            market_type: marketType,
-            bundle_predictions: marketType === "bundle" ? predictions : [],
-            options,
-            end_date: endDate,
-            event_id: eventId || null,
-            featured,
-            is_live: isLive,
-            stream_url: streamUrl,
-            live_duration_minutes: Number(liveDuration),
-          }),
-        }
-      );
+      const eventIds =
+          selectedEventIds.length > 0
+            ? selectedEventIds
+            : [null];
 
-      const data = await res.json();
+      const results = [];
 
-      if (!data.success) {
-        alert(data.error || "Failed to create market");
-        return;
+      for (const selectedEventId of eventIds) {
+
+          const res = await fetch(
+              "https://api.theprobability.site/admin/create-market",
+              {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+
+                body: JSON.stringify({
+                    title,
+                    description,
+                    rules,
+                    category,
+                    b: Number(b),
+
+                    market_type: marketType,
+
+                    bundle_predictions:
+                        marketType === "bundle"
+                          ? predictions
+                          : [],
+
+                    options,
+
+                    end_date: endDate,
+
+                    event_id: selectedEventId,
+
+                    featured,
+
+                    is_live: isLive,
+
+                    stream_url: streamUrl,
+
+                    live_duration_minutes:
+                        Number(liveDuration),
+                }),
+              }
+            );
+
+            const data = await res.json();
+
+            if (!data.success) {
+                throw new Error(
+                    data.error ||
+                    `Failed to create market for event ${selectedEventId}`
+                );
+            }
+
+            results.push(data);
       }
+
+      const createdCount = results.length;
+
+      alert(
+          createdCount === 1
+            ? "Market created successfully"
+            : `${createdCount} markets created successfully`
+      );
 
       alert("Market created");
 
@@ -1437,30 +1491,147 @@ export default function AdminPage() {
             <option value="bundle">Bundle Market</option>
           </select>
 
-          <select
-            value={eventId}
-            onChange={(e) =>
-              setEventId(
-                e.target.value === ""
-                  ? ""
-                  : Number(e.target.value)
-              )
-            }
-            className="w-full mb-3 bg-black border border-white/10 p-3 rounded"
-          >
-            <option value="">
-              Standalone Market
-            </option>
+          <div className="mb-5 border border-white/10 rounded-2xl bg-black/40 p-4">
 
-            {events.map(event => (
-              <option
-                key={event.id}
-                value={event.id}
-              >
-                {event.title}
-              </option>
-            ))}
-          </select>
+              <div className="flex items-center justify-between mb-3">
+                  <div>
+                      <div className="font-bold text-lg">
+                          Attach Market To Events
+                      </div>
+
+                      <div className="text-sm text-zinc-500">
+                          Select one or multiple events.
+                          Leave everything unchecked for a standalone market.
+                      </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                      <button
+                          type="button"
+                          onClick={selectAllEvents}
+                          className="
+                            px-3
+                            py-2
+                            rounded-lg
+                            text-xs
+                            font-bold
+                            bg-blue-500/10
+                            border
+                            border-blue-500/20
+                            text-blue-400
+                            hover:bg-blue-500/20
+                          "
+                      >
+                          Select All
+                      </button>
+
+                      <button
+                          type="button"
+                          onClick={clearSelectedEvents}
+                          className="
+                            px-3
+                            py-2
+                            rounded-lg
+                            font-bold
+                            text-xs
+                            bg-zinc-800
+                            text-zinc-300
+                            hover:bg-zinc-700
+                          "
+                      >
+                          Clear
+                      </button>
+                  </div>
+              </div>
+
+              <div className="mb-4">
+                  {selectedEventIds.length === 0 ? (
+                    <div className="
+                        px-4
+                        py-3
+                        rounded-xl
+                        bg-zinc-900
+                        border
+                        border-white/10
+                        text-zinc-400
+                        text-sm
+                    ">
+                        ✓ Standalone Market
+                    </div>
+                  ):(
+                    <div className="
+                        px-4
+                        py-3
+                        rounded-xl
+                        bg-blue-500/10
+                        border
+                        border-blue-500/20
+                        text-blue-300
+                        text-sm
+                    ">
+                        {selectedEventIds.length} event
+                        {selectedEventIds.length !== 1 ? "s" : ""} selected
+                    </div>
+                  )}
+              </div>
+
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+
+                  {events.length === 0 ? (
+                    <div className="text-zinc-500 text-sm py-3">
+                        No events available.
+                    </div>
+                  ):(
+                    events.map(event => {
+                        const selected = selectedEventIds.includes(event.id);
+
+                        return(
+                            <label
+                                key={event.id}
+                                className={`
+                                  flex
+                                  items-center
+                                  gap-3
+                                  p-3
+                                  rounded-xl
+                                  cursor-pointer
+                                  border
+                                  transition
+                                  ${
+                                      selected
+                                        ? "bg-blue-500/10 border-blue-500/30"
+                                        : "bg-zinc-900 border-white/10 hover:border-white/20"
+                                  }
+                                `}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={selected}
+                                    onChange={() => toggleEventSelection(event.id)}
+                                    className="w-5 h-5"
+                                />
+
+                                <div className="flex-1 min-w-0">
+                                    <div className="font-semibold truncate">
+                                        {event.title}
+                                    </div>
+
+                                    <div className="text-xs text-zinc-500">
+                                        {event.category}
+                                    </div>
+                                </div>
+
+                                {selected && (
+                                  <div className="text-blue-400 text-sm font-bold">
+                                      Selected
+                                  </div>
+                                )}
+                            </label>
+                          );
+                        })
+                      )}
+              </div>
+          </div>
 
           <input
             value={title}
