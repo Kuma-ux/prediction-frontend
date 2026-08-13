@@ -1826,55 +1826,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* SOCIALS */}
-          <div className="flex items-center gap-5 text-2xl">
-
-            <a
-              href="https://x.com/mollyja47470434"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-white transition"
-            >
-              <FaXTwitter />
-            </a>
-
-            <a
-              href="https://discord.gg/YOUR_SERVER"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-indigo-400 transition"
-            >
-              <FaDiscord />
-            </a>
-
-            <a
-              href="https://t.me/UntitledInc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-sky-400 transition"
-            >
-              <FaTelegram />
-            </a>
-
-            <a
-              href="https://www.youtube.com/@untitled-p1e"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-red-500 transition"
-            >
-              <FaYoutube />
-            </a>
-
-            <a
-              href="https://www.instagram.com/ineedanewusername_anyideas"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-pink-500 transition"
-            >
-              <FaInstagram />
-            </a>
-          </div>
-
           <div className="text-zinc-500 text-sm">
             © 2026 Probability. All rights reserved.
           </div>
