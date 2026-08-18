@@ -793,198 +793,229 @@ export default function HomePage() {
       </div>
     </div>
 
-    {/* FEATURED MARKETS */}
-    <div className="relative h-[420px] md:h-[460px]">
+    {/* FEATURED MARKETS / EVENTS */}
+<div className="relative h-[420px] md:h-[460px]">
 
-      {featuredItems.map((item: any, index) => {
+  {featuredItems.map((item: any, index) => {
 
-        const isEvent = "markets" in item;
+    const isEvent = "markets" in item;
+    const isActive = index === activeSlide;
 
-        const isActive = index === activeSlide;
+    return (
+      <motion.div
+        key={`${isEvent ? "event" : "market"}-${item.id}`}
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: isActive ? 1 : 0,
+          scale: isActive ? 1 : 0.96,
+        }}
+        transition={{
+          duration: 0.6,
+        }}
+        className={`
+          absolute
+          inset-0
+          rounded-3xl
+          border
+          border-white/10
+          bg-gradient-to-br
+          from-zinc-900
+          to-black
+          p-6
+          flex
+          flex-col
+          justify-between
+          overflow-hidden
+          ${
+            isActive
+              ? "pointer-events-auto z-20"
+              : "pointer-events-none z-0"
+          }
+        `}
+      >
 
-        return (
-          <motion.div
-            key={`${isEvent ? "event" : "market"}-${item.id}`}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: isActive ? 1 : 0,
-              scale: isActive ? 1 : 0.96,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
-            className={`
-              absolute
-              inset-0
-              rounded-3xl
-              border
-              border-white/10
-              bg-gradient-to-br
-              from-zinc-900
-              to-black
-              p-6
-              flex
-              flex-col
-              justify-between
-              overflow-hidden
-              ${
-                isActive
-                  ? "pointer-events-auto z-20"
-                  : "pointer-events-none z-0"
-              }
-            `}
-          >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,255,150,0.12),transparent_40%)]" />
 
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,255,150,0.12),transparent_40%)]" />
+        <div className="relative z-10">
 
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
-                    {item.category}
+          <div className="flex items-center justify-between mb-6">
+
+            <div className="flex items-center gap-2 flex-wrap">
+
+              <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
+                {item.category}
+              </div>
+
+              {isEvent && (
+                <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-semibold">
+                  Event
+                </div>
+              )}
+
+              {!isEvent && item.market_type === "bundle" && (
+                <div className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
+                  Bundle
+                </div>
+              )}
+
+            </div>
+
+            <div className="text-zinc-500 text-sm flex items-center gap-1">
+              <Clock3 size={14} />
+              {formatDatabaseDateTime(item.end_date)}
+            </div>
+
+          </div>
+
+          <h2 className="text-2xl md:text-5xl font-black leading-tight max-w-4xl">
+            {item.title}
+          </h2>
+
+          <p className="mt-4 text-zinc-400 text-sm md:text-lg leading-relaxed max-w-3xl">
+            {item.description}
+          </p>
+
+          <div className="flex flex-wrap gap-3 mt-8">
+
+            {isEvent ? (
+
+              item.markets?.slice(0, 3).map((eventMarket: any) => (
+                <div
+                  key={eventMarket.id}
+                  className="
+                    bg-black/40
+                    border
+                    border-white/10
+                    rounded-2xl
+                    px-4
+                    py-3
+                    min-w-[120px]
+                    max-w-[220px]
+                  "
+                >
+                  <div className="text-zinc-500 text-xs mb-1">
+                    Market
                   </div>
 
-                  {isEvent && (
-                    <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-semibold">
-                      Event
+                  <div className="text-sm font-bold text-white line-clamp-2">
+                    {eventMarket.title}
+                  </div>
+
+                  {eventMarket.odds !== undefined && (
+                    <div className="text-xl font-black text-emerald-400 mt-1">
+                      {(eventMarket.odds * 100).toFixed(0)}%
                     </div>
                   )}
-
-                  {!isEvent && item.market_type === "bundle" && (
-                    <div className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
-                      Bundle
-                    </div>
-                  )}
                 </div>
-                <div className="text-zinc-500 text-sm flex items-center gap-1">
-                  <Clock3 size={14} />
-                  {formatDatabaseDateTime(item.end_date)}
+              ))
+
+            ) : (
+
+              item.options?.slice(0, 3).map((option: string) => (
+                <div
+                  key={option}
+                  className="
+                    bg-black/40
+                    border
+                    border-white/10
+                    rounded-2xl
+                    px-4
+                    py-3
+                    min-w-[120px]
+                  "
+                >
+                  <div className="text-zinc-500 text-xs mb-1">
+                    {option}
+                  </div>
+
+                  <div className="text-xl font-black text-emerald-400">
+                    {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
+                  </div>
                 </div>
-              </div>
+              ))
 
-              <h2 className="text-2xl md:text-5xl font-black leading-tight max-w-4xl">
-                {item.title}
-              </h2>
+            )}
 
-              <p className="mt-4 text-zinc-400 text-sm md:text-lg leading-relaxed max-w-3xl">
-                {item.description}
-              </p>
+          </div>
 
-              <div className="flex flex-wrap gap-3 mt-8">
-                {isEvent ? (
-                  item.markets?.slice(0, 3).map((eventMarket: any) => (
-                    <div
-                      key={eventMarket.id}
-                      className="
-                        bg-black/40
-                        border
-                        border-white/10
-                        rounded-2xl
-                        px-4
-                        py-3
-                        min-w-[120px]
-                        max-w-[220px]
-                      "
-                    >
-                      <div className="text-zinc-500 text-xs mb-1">
-                        Market
-                      </div>
-                      <div className="text-sm font-bold text-white line-clamp-2">
-                        {eventMarket.title}
-                      </div>
-                      {eventMarket.odds !== undefined && (
-                        <div className="text-xl font-black text-emerald-400 mt-1">
-                          {(eventMarket.odds * 100).toFixed(0)}%
-                        </div>
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  item.options?.slice(0, 3).map((option: string) => (
-                    <div
-                      key={option}
-                      className="
-                        bg-black/40
-                        border
-                        border-white/10
-                        rounded-2xl
-                        px-4
-                        py-3
-                        min-w-[120px]
-                      "
-                    >
-                      <div className="text-zinc-500 text-xs mb-1">
-                        {option}
-                      </div>
-                      <div className="text-xl font-black text-emerald-400">
-                        {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
+        </div>
 
-            <div className="relative z-10 mt-8 flex items-center justify-between">
-              <div>
-                <div className="text-zinc-500 text-xs uppercase">
-                  Volume
-                </div>
+        <div className="relative z-10 mt-8 flex items-center justify-between">
 
-                <div className="text-2xl font-black">
-                  KES{item.totalvolume}
-                </div>
-              </div>
-
-              <button
-                onClick={() =>
-                  router.push(
-      isEvent
-        ? `/event/${item.id}`
-        : `/market/${item.id}`
-    )
-                }
-                className="bg-emerald-500 hover:bg-emerald-400 transition text-black font-bold px-6 py-3 rounded-2xl flex items-center gap-2"
-              >
-                Trade Market
-                <ArrowUpRight size={18} />
-              </button>
+          <div>
+            <div className="text-zinc-500 text-xs uppercase">
+              Volume
             </div>
-          </motion.div>
-        );
-      })}
 
-      {/* DOTS */}
-      <div
-        className="
-          absolute
-          bottom-4
-          left-1/2
-          -translate-x-1/2
-          flex
-          gap-2
-          z-30
-        "
-      >
-        {featuredItems.map((_, index) => (
+            <div className="text-2xl font-black">
+              KES{item.totalvolume ?? 0}
+            </div>
+          </div>
+
           <button
-            key={index}
-            onClick={() => setActiveSlide(index)}
-            className={`
-              w-3
-              h-3
-              rounded-full
+            onClick={() =>
+              router.push(
+                isEvent
+                  ? `/event/${item.id}`
+                  : `/market/${item.id}`
+              )
+            }
+            className="
+              bg-emerald-500
+              hover:bg-emerald-400
               transition
-              ${
-                activeSlide === index
-                  ? "bg-emerald-400"
-                  : "bg-white/20"
-              }
-            `}
-          />
-        ))}
-      </div>
+              text-black
+              font-bold
+              px-6
+              py-3
+              rounded-2xl
+              flex
+              items-center
+              gap-2
+            "
+          >
+            {isEvent ? "View Event" : "Trade Market"}
+            <ArrowUpRight size={18} />
+          </button>
 
-    </div>
+        </div>
+
+      </motion.div>
+    );
+  })}
+
+  {/* DOTS */}
+  <div
+    className="
+      absolute
+      bottom-4
+      left-1/2
+      -translate-x-1/2
+      flex
+      gap-2
+      z-30
+    "
+  >
+    {featuredItems.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setActiveSlide(index)}
+        className={`
+          w-3
+          h-3
+          rounded-full
+          transition
+          ${
+            activeSlide === index
+              ? "bg-emerald-400"
+              : "bg-white/20"
+          }
+        `}
+      />
+    ))}
+  </div>
+
+</div>
   </div>
 </section>
 
