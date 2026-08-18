@@ -411,9 +411,10 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  const featuredMarkets = standaloneMarkets.filter(
-    (m: any) => m.featured
-  );
+  const featuredItems = [
+    ...events.filter((event: any) => event.featured),
+    ...standaloneMarkets.filter((market: any) => market.featured),
+  ];
 
   const liveMarkets = standaloneMarkets.filter(
     (m: any) => m.is_live
@@ -526,18 +527,18 @@ export default function HomePage() {
     }
   }, []);
   useEffect(() => {
-    if (featuredMarkets.length <= 1) return;
+    if (featuredItems.length <= 1) return;
 
     const interval = setInterval(() => {
       setActiveSlide((prev) =>
-        prev >= featuredMarkets.length - 1
+        prev >= featuredItems.length - 1
           ? 0
           : prev + 1
       );
     }, 5000); // 5 seconds
 
     return () => clearInterval(interval);
-  }, [featuredMarkets.length]);
+  }, [featuredItems.length]);
 
   return (
     <main className="min-h-screen bg-black text-white overflow-hidden">
@@ -795,13 +796,15 @@ export default function HomePage() {
     {/* FEATURED MARKETS */}
     <div className="relative h-[420px] md:h-[460px]">
 
-      {featuredMarkets.map((market, index) => {
+      {featuredItems.map((item: any, index) => {
+
+        const isEvent = "markets" in item;
 
         const isActive = index === activeSlide;
 
         return (
           <motion.div
-            key={market.id}
+            key={`${isEvent ? "event" : "market"}-${item.id}`}
             initial={{ opacity: 0 }}
             animate={{
               opacity: isActive ? 1 : 0,
@@ -836,12 +839,18 @@ export default function HomePage() {
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
-                    {market.category}
+                    {item.category}
                   </div>
 
-                  {market.market_type === "bundle" && (
+                  {isEvent && (
+                    <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-semibold">
+                      Event
+                    </div>
+                  )}
+
+                  {!isEvent && item.market_type === "bundle" && (
                     <div className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
                       Bundle
                     </div>
@@ -849,34 +858,71 @@ export default function HomePage() {
                 </div>
                 <div className="text-zinc-500 text-sm flex items-center gap-1">
                   <Clock3 size={14} />
-                  {formatDatabaseDateTime(market.end_date)}
+                  {formatDatabaseDateTime(item.end_date)}
                 </div>
               </div>
 
               <h2 className="text-2xl md:text-5xl font-black leading-tight max-w-4xl">
-                {market.title}
+                {item.title}
               </h2>
 
               <p className="mt-4 text-zinc-400 text-sm md:text-lg leading-relaxed max-w-3xl">
-                {market.description}
+                {item.description}
               </p>
 
               <div className="flex flex-wrap gap-3 mt-8">
-                {market.options?.slice(0, 3).map((option: string) => (
-                  <div
-                    key={option}
-                    className="bg-black/40 border border-white/10 rounded-2xl px-4 py-3 min-w-[120px]"
-                  >
-                    <div className="text-zinc-500 text-xs mb-1">
-                      {option}
+                {isEvent ? (
+                  item.markets?.slice(0, 3).map((eventMarket: any) => (
+                    <div
+                      key={eventMarket.id}
+                      className="
+                        bg-black/40
+                        border
+                        border-white/10
+                        rounded-2xl
+                        px-4
+                        py-3
+                        min-w-[120px]
+                        max-w-[220px]
+                      "
+                    >
+                      <div className="text-zinc-500 text-xs mb-1">
+                        Market
+                      </div>
+                      <div className="text-sm font-bold text-white line-clamp-2">
+                        {eventMarket.title}
+                      </div>
+                      {eventMarket.odds !== undefined && (
+                        <div className="text-xl font-black text-emerald-400 mt-1">
+                          {(eventMarket.odds * 100).toFixed(0)}%
+                        </div>
+                      )}
                     </div>
-                    <div className="text-xl font-black text-emerald-400">
-                      {((market.odds?.[option] ?? 0) * 100).toFixed(0)}%
+                  ))
+                ) : (
+                  item.options?.slice(0, 3).map((option: string) => (
+                    <div
+                      key={option}
+                      className="
+                        bg-black/40
+                        border
+                        border-white/10
+                        rounded-2xl
+                        px-4
+                        py-3
+                        min-w-[120px]
+                      "
+                    >
+                      <div className="text-zinc-500 text-xs mb-1">
+                        {option}
+                      </div>
+                      <div className="text-xl font-black text-emerald-400">
+                        {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
-            </div>
 
             <div className="relative z-10 mt-8 flex items-center justify-between">
               <div>
@@ -885,18 +931,17 @@ export default function HomePage() {
                 </div>
 
                 <div className="text-2xl font-black">
-                  KES{market.totalvolume}
+                  KES{item.totalvolume}
                 </div>
               </div>
 
               <button
                 onClick={() =>
-                  document
-                    .getElementById(`market-${market.id}`)
-                    ?.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    })
+                  router.push(
+      isEvent
+        ? `/event/${item.id}`
+        : `/market/${item.id}`
+    )
                 }
                 className="bg-emerald-500 hover:bg-emerald-400 transition text-black font-bold px-6 py-3 rounded-2xl flex items-center gap-2"
               >
@@ -920,7 +965,7 @@ export default function HomePage() {
           z-30
         "
       >
-        {featuredMarkets.map((_, index) => (
+        {featuredItems.map((_, index) => (
           <button
             key={index}
             onClick={() => setActiveSlide(index)}
