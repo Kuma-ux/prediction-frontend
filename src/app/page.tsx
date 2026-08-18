@@ -900,12 +900,6 @@ export default function HomePage() {
                   <div className="text-sm font-bold text-white line-clamp-2">
                     {eventMarket.title}
                   </div>
-
-                  {eventMarket.odds !== undefined && (
-                    <div className="text-xl font-black text-emerald-400 mt-1">
-                      {(eventMarket.odds * 100).toFixed(0)}%
-                    </div>
-                  )}
                 </div>
               ))
 
@@ -928,11 +922,9 @@ export default function HomePage() {
                     {option}
                   </div>
 
-                  {!isEvent && (
-                    <div className="text-emerald-400">
-                      {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
-                    </div>
-                  )}
+                  <div className="text-xl font-black text-emerald-400">
+                    {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
+                  </div>
                 </div>
               ))
 
