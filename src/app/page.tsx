@@ -928,9 +928,11 @@ export default function HomePage() {
                     {option}
                   </div>
 
-                  <div className="text-xl font-black text-emerald-400">
-                    {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
-                  </div>
+                  {!isEvent && (
+                    <div className="text-emerald-400">
+                      {((item.odds?.[option] ?? 0) * 100).toFixed(0)}%
+                    </div>
+                  )}
                 </div>
               ))
 
